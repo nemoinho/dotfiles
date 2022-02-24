@@ -1,0 +1,41 @@
+= Dotfiles
+Felix Nehrke <felix@nehrke.info>
+:icons: font
+:source-highlighter: rouge
+
+[abstract]
+I'll use the https://news.ycombinator.com/item?id=11071754["bare repository and alias method"] to track my dotfiles.
+
+== Usage
+Use all your familiar git commands but with `config` instead of `git`.
+
+[source,bash]
+config status
+config add .vimrc
+config commit -m "Add vimrc"
+config add .config/redshift.conf
+config commit -m "Add redshift config"
+config push
+
+== Setup
+
+.Clone on new machine
+[source,bash]
+GIT_DIR=$HOME/Development/nemoinho/gitea.nehrke.info/nemoinho/dotfiles
+GIT_REMOTE=git@gitea.nehrke.info:nemoinho/dotfiles.git
+git clone --separate-git-dir=$GIT_DIR $GIT_REMOTE $HOME/tmp-dotfiles
+rm -r ~/tmp-dotfiles
+alias config='/usr/bin/git --git-dir=$GIT_DIR --work-tree=$HOME'
+config checkout
+config config --local status.showUntrackedFiles no
+
+.Initial setup
+[source,bash]
+GIT_DIR=$HOME/Development/nemoinho/gitea.nehrke.info/nemoinho/dotfiles
+GIT_REMOTE=git@gitea.nehrke.info:nemoinho/dotfiles.git
+git init --bare -b main $GIT_DIR
+alias config='/usr/bin/git --git-dir=$GIT_DIR --work-tree=$HOME'
+config config status.showUntrackedFiles no
+config remote add origin $GIT_REMOTE
+config push -u origin main
+
