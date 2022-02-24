@@ -30,6 +30,7 @@ Plugin 'git@github.com:tpope/vim-surround.git'
 Plugin 'git@github.com:vim-airline/vim-airline.git'
 Plugin 'git@github.com:vim-syntastic/syntastic.git'
 Plugin 'git@github.com:vimwiki/vimwiki.git'
+Plugin 'git@github.com:tpope/vim-cucumber.git'
 
 call vundle#end()
 " End: Manage plugins
@@ -67,8 +68,8 @@ highlight CusrsorLine ctermbg=green
 colorscheme gruvbox
 
 " sorted alphabetically to avoid conflicts, even if it's harder to read!
-imap <silent> <C-d> <Esc>:botright terminal ++close<CR>
-inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+nnoremap <silent> <C-d> :botright terminal ++close<CR>
+inoremap <silent> <C-d> <Esc>:botright terminal ++close<CR>
 nmap <Leader>, :NERDTreeFocus<CR>
 nmap <Leader>c :NERDTreeClose<CR>
 nmap <Leader>d :VimwikiDiaryIndex<CR>
@@ -95,7 +96,6 @@ nmap <Leader>tp :Tabularize /\|/l1<CR>
 nmap <Leader>tt :Tabularize /\|/l1<CR>
 nmap <Leader>u :UndotreeToggle<CR>
 nmap <Leader>w :set wrap!<CR>
-nmap <silent> <C-d> <Esc>:botright terminal ++close<CR>
 nmap gv :vertical wincmd f<CR>
 
 augroup jsgroup
@@ -123,25 +123,10 @@ augroup vimwikigroup
     autocmd FileType vimwiki nmap <Leader>to :VimwikiTOC<CR>
     autocmd FileType vimwiki noremap ZZ :Goyo!<CR>:q<CR>
     " Fix broken backspace functionality on mac
-    autocmd FileType vimwiki nmap <C-H> <Plug>VimwikiGoBackLink
-    "autocmd BufRead,BufNewFile *.wiki :Goyo 80
-    "autocmd FileType vimwiki nmap <Leader>tp :Tabularize /\|/l0<CR>
-    "autocmd FileType vimwiki nmap <Leader>tt :Tabularize /\|/l0<CR>
-    inoremap <silent> <Bar>   <Bar>
-
-    " Autocommit stuff
-    "autocmd BufWritePost $HOME/vimwiki/* execute 'silent ! FILE=$(basename %); cd $(dirname %); if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1 ; then git add $FILE > /dev/null 2>&1; git commit -m $FILE > /dev/null 2>&1; git push > /dev/null 2>&1; fi'
+    if has("unix")
+        let s:uname = system("uname -s")
+        if s:uname == "Darwin"
+            autocmd FileType vimwiki nmap <C-H> <Plug>VimwikiGoBackLink
+        endif
+    endif
 augroup end
-
-" Utility function to format tables in real time
-" (only for pipe-separated tables)
-function! s:align()
-  let p = '^\s*|\s.*\s|\s*'
-  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-    Tabularize/|/l1
-    normal! 0
-    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-  endif
-endfunction
