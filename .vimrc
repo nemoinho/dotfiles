@@ -88,6 +88,7 @@ let g:gruvbox_contrast_dark = 'hard'
 let g:vimwiki_table_mappings = 0
 let g:vimwiki_folding = 'expr'
 let g:vimwiki_list = [{'path': '~/Development/nemoinho/gitea.nehrke.info/nemoinho/vimwiki/', 'auto_export': 1}]
+let g:vimwiki_autowriteall = 0
 let g:NERDTreeGitStatusShowIgnored = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
@@ -118,79 +119,74 @@ highlight CusrsorLine ctermbg=green
 
 colorscheme gruvbox8
 
-
 " General utilities
-nmap <Leader>gg :Goyo<CR>
-nmap <Leader>l :set nu! relativenumber! wrap!<CR>
-nmap <Leader>tw :set textwidth=72<CR>
-nmap <Leader>q :qa!<CR>
-nmap gv :vertical wincmd f<CR>
 nnoremap <leader>cd :cd %:p:h<CR>
+nnoremap <Leader>gg :Goyo<CR>
+nnoremap <Leader>l :set nu! relativenumber! wrap!<CR>
+nnoremap <Leader>q :qa!<CR>
+nnoremap gv :vertical wincmd f<CR>
 
 " Open shell with Ctrl+d to enable a toggle between a shell and vim
 nnoremap <silent> <C-d> :botright terminal ++close<CR>
 inoremap <silent> <C-d> <Esc>:botright terminal ++close<CR>
 
 " Handle nerdtree and other utility-windows
-nmap <Leader>, :NERDTreeFocus<CR>
-nmap <Leader>c :NERDTreeClose<CR>
-nmap <Leader>n :NERDTreeToggle<CR>
-nmap <Leader>t :TagbarToggle<CR>
-nmap <Leader>u :UndotreeToggle<CR>
+nnoremap <Leader>, :NERDTreeFocus<CR>
+nnoremap <Leader>c :NERDTreeClose<CR>
+nnoremap <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>t :TagbarToggle<CR>
+nnoremap <Leader>u :UndotreeToggle<CR>
 
 " Git
-nmap <Leader>ga. :Git add %<CR>
-nmap <Leader>gaa :Git add .<CR>
-nmap <Leader>gb :Git blame<CR>
-nmap <Leader>gc :Git commit<CR>
-nmap <Leader>gd :Git diff<CR>
-nmap <Leader>gl :Git lg<CR>
-nmap <Leader>gp :Git push -u origin<CR>
-nmap <Leader>gs :Git status<CR>
+nnoremap <Leader>ga. :Git add %<CR>
+nnoremap <Leader>gaa :Git add .<CR>
+nnoremap <Leader>gb :Git blame<CR>
+nnoremap <Leader>gc :Git commit<CR>
+nnoremap <Leader>gd :Git diff<CR>
+nnoremap <Leader>gl :Git lg<CR>
+nnoremap <Leader>gp :Git push -u origin<CR>
+nnoremap <Leader>gs :Git status<CR>
+nnoremap <Leader>tw :set textwidth=72<CR>
 
 " Install these files to ~/.vim/spell/
 " http://ftp.vim.org/vim/runtime/spell/en.utf-8.spl
 " http://ftp.vim.org/vim/runtime/spell/de.utf-8.spl
-nmap <Leader>ss :set spell!<CR>
-nmap <Leader>sd :set spelllang=de_de<CR>
-nmap <Leader>se :set spelllang=en_us<CR>
+nnoremap <Leader>ss :set spell!<CR>
+nnoremap <Leader>sd :set spelllang=de_de<CR>
+nnoremap <Leader>se :set spelllang=en_us<CR>
 
 " Tabularize
-nmap <Leader>t, :Tabularize /,/l1<CR>
-nmap <Leader>tc :Tabularize /;/l1<CR>
-nmap <Leader>tp :Tabularize /\|/l1<CR>
-nmap <Leader>tt :Tabularize /\|/l1<CR>
+nnoremap <Leader>t, :Tabularize /,/l1<CR>
+nnoremap <Leader>tc :Tabularize /;/l1<CR>
+nnoremap <Leader>tp :Tabularize /\|/l1<CR>
+nnoremap <Leader>tt :Tabularize /\|/l1<CR>
 
-augroup jsgroup
+" diffs
+if &diff
+    nnoremap <Leader>1 :diffget LOCAL<CR>
+    nnoremap <Leader>2 :diffget BASE<CR>
+    nnoremap <Leader>3 :diffget REMOTE<CR>
+endif
+
+augroup configgroup
     autocmd!
     autocmd FileType javascript set tabstop=2 softtabstop=2 shiftwidth=2 expandtab foldlevel=5
-augroup end
-augroup yamlgroup
-    autocmd!
     autocmd FileType yaml set tabstop=2 softtabstop=2 shiftwidth=2 expandtab foldlevel=4
-augroup end
-augroup nerdtreegroup
-    autocmd!
+
     " Close when only Nerdtree would remain
     autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-augroup end
-augroup diffgroup
-    autocmd!
+
     " Copy global wrap in diff (This way I can use the same behavior in diff as in normal views)
     autocmd FilterWritePre * if &diff | setlocal wrap< | endif
-    if &diff
-        nmap <Leader>1 :diffget LOCAL<CR>
-        nmap <Leader>2 :diffget BASE<CR>
-        nmap <Leader>3 :diffget REMOTE<CR>
-    endif
-augroup end
-augroup vimwikigroup
-    autocmd!
+
     autocmd BufRead,BufNewFile diary.wiki VimwikiDiaryGenerateLinks
+    autocmd BufRead,BufNewFile *.wiki Goyo 80 | set wrap
     autocmd FileType vimwiki set tabstop=2 softtabstop=2 shiftwidth=2 expandtab foldlevel=10
-    autocmd FileType vimwiki nmap <Leader>d :VimwikiDiaryIndex<CR>
-    autocmd FileType vimwiki nmap <Leader>to :VimwikiTOC<CR>
-    autocmd FileType vimwiki noremap ZZ :Goyo!<CR>:q<CR>
+    autocmd FileType vimwiki nnoremap <Leader>d :VimwikiDiaryIndex<CR>
+    autocmd FileType vimwiki nnoremap <Leader>to :VimwikiTOC<CR>
+    autocmd FileType vimwiki nnoremap <Leader>q :Goyo!<CR>:q<CR>
+    autocmd FileType vimwiki nnoremap <Leader>x :Goyo!<CR>:x<CR>
+    autocmd FileType vimwiki nnoremap ZZ :Goyo!<CR>:x<CR>
     " Fix broken backspace functionality on mac
     if has("unix")
         let s:uname = system("uname -s")
