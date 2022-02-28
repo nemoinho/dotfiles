@@ -74,7 +74,7 @@ alias gt='git gt'
 alias gdc='gd --cached'
 alias c='git commit'
 alias markdown_pdf="docker run --rm -v \$PWD:/opt/docs auchida/markdown-pdf markdown-pdf"
-alias vimwiki='vim -c VimwikiIndex -c "cd %:p:h"'
-alias wiki='vim -c VimwikiIndex -c "cd %:p:h"'
+alias vimwiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
+alias wiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
 
 __git_complete config __git_main
