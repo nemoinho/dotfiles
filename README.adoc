@@ -19,6 +19,10 @@ config push
 
 == Setup
 
+.Quick setup
+[source,bash]
+curl -s https://gitea.nehrke.info/nemoinho/dotfiles/raw/branch/main/.config/dotfiles/setup-machine.sh | bash
+
 .Clone on new machine
 [source,bash]
 GIT_DIR=$HOME/Development/nemoinho/gitea.nehrke.info/nemoinho/dotfiles
