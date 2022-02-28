@@ -7,6 +7,9 @@ export XDG_STATE_HOME=$HOME/.local/state
 
 export EDITOR=vim
 
+# Shut off deprecation warning of bash in mac
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
 if [ -d /etc/skel/.bashrc ]
 then
     source /etc/skel/.bashrc
