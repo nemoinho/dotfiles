@@ -123,6 +123,7 @@ colorscheme gruvbox8
 nnoremap <leader>cd :cd %:p:h<CR>
 nnoremap <Leader>gg :Goyo<CR>
 nnoremap <Leader>l :set nu! relativenumber! wrap!<CR>
+nnoremap <leader>m :make<CR>
 nnoremap <Leader>q :qa!<CR>
 nnoremap gv :vertical wincmd f<CR>
 
@@ -179,13 +180,16 @@ augroup configgroup
     " Copy global wrap in diff (This way I can use the same behavior in diff as in normal views)
     autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 
+    autocmd FileType asciidoc nnoremap <silent> <C-a> :call system('asciidoctor *.adoc')<CR>
+    autocmd FileType asciidoc nnoremap <silent> <C-s> :call system('asciidoctor-pdf *.adoc')<CR>
+
     autocmd BufRead,BufNewFile diary.wiki VimwikiDiaryGenerateLinks
     autocmd BufRead,BufNewFile *.wiki Goyo 80 | set wrap
     autocmd FileType vimwiki set tabstop=2 softtabstop=2 shiftwidth=2 expandtab foldlevel=10
     autocmd FileType vimwiki nnoremap <Leader>d :VimwikiDiaryIndex<CR>
     autocmd FileType vimwiki nnoremap <Leader>to :VimwikiTOC<CR>
     autocmd FileType vimwiki nnoremap <Leader>q :Goyo!<CR>:q<CR>
-    autocmd FileType vimwiki nnoremap <Leader>x :Goyo!<CR>:x<CR>
+    autocmd FileType vimwiki nnoremap <silent> <Leader>x :call system('git add . && git commit -m "Auto commit" && git push')<CR>
     autocmd FileType vimwiki nnoremap ZZ :Goyo!<CR>:x<CR>
     " Fix broken backspace functionality on mac
     if has("unix")
