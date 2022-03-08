@@ -16,7 +16,6 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # set PATH so it includes user's private bin if it exists
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
-[ -d "$HOME/.local/opt/java/bin" ] && PATH="$HOME/.local/opt/java/bin:$PATH"
 [ -d "$HOME/.local/opt/go/bin" ] && PATH="$HOME/.local/opt/go/bin:$PATH"
 
 # autocompletion
