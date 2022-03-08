@@ -1,22 +1,11 @@
-# freedesktop
-# see: https://wiki.archlinux.org/index.php/XDG_Base_Directory
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_CACHE_HOME=$HOME/.cache
-export XDG_DATA_HOME=$HOME/.local/share
-export XDG_STATE_HOME=$HOME/.local/state
+[[ -f ~/.profile ]] && . ~/.profile
 
-export EDITOR=vim
-
-# Shut off deprecation warning of bash in mac
+# Shut off deprecation warning of bash on macos
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # load all the defauls on debian
 # TODO: get rid of it by applying all relevant things in this file
 [ -d /etc/skel/.bashrc ] && . /etc/skel/.bashrc
-
-# set PATH so it includes user's private bin if it exists
-[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
-[ -d "$HOME/.local/opt/go/bin" ] && PATH="$HOME/.local/opt/go/bin:$PATH"
 
 # autocompletion
 [ -s /usr/share/bash-completion/completions/git ] && . /usr/share/bash-completion/completions/git
@@ -59,6 +48,10 @@ which fly &>/dev/null && . <(fly completion --shell bash)
 export SDKMAN_DIR="$XDG_CONFIG_HOME/sdkman"
 [ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ] && . "$SDKMAN_DIR/bin/sdkman-init.sh"
 
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 alias config='/usr/bin/git --git-dir=$HOME/Development/nemoinho/gitea.nehrke.info/nemoinho/dotfiles --work-tree=$HOME'
 alias lg='git lg'
 alias lgb='git lgb'
@@ -75,8 +68,5 @@ alias markdown_pdf="docker run --rm -v \$PWD:/opt/docs auchida/markdown-pdf mark
 alias vimwiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
 alias wiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
 
+# Enable autocompletion for "config" to manage dotfiles
 __git_complete config __git_main
-
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
