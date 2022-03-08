@@ -17,7 +17,6 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 # set PATH so it includes user's private bin if it exists
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
 [ -d "$HOME/.local/opt/java/bin" ] && PATH="$HOME/.local/opt/java/bin:$PATH"
-[ -d "$HOME/.local/opt/node/bin" ] && PATH="$HOME/.local/opt/node/bin:$PATH"
 [ -d "$HOME/.local/opt/go/bin" ] && PATH="$HOME/.local/opt/go/bin:$PATH"
 
 # autocompletion
@@ -78,3 +77,7 @@ alias vimwiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
 alias wiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
 
 __git_complete config __git_main
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
