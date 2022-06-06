@@ -11,6 +11,8 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 [ -s /usr/share/bash-completion/completions/git ] && . /usr/share/bash-completion/completions/git
 which brew &>/dev/null && [ -s $(brew --prefix)/etc/bash_completion ] && .  $(brew --prefix)/etc/bash_completion 
 
+[ -s /etc/bash_completion ] && . /etc/bash_completion
+
 # debian, ubuntu and so on
 GIT_PROMPT_SH=/usr/lib/git-core/git-sh-prompt
 
