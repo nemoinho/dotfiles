@@ -38,6 +38,7 @@ export HISTTIMEFORMAT="%d/%m/%y %T "
 export HISTSIZE=40000
 export HISTFILESIZE=50000
 export HISTFILE=$XDG_STATE_HOME/bash/bash_history
+export HISTCONTROL=ignorespace:ignoredups
 
 MY_HISTORY_PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> '$XDG_STATE_HOME'/bash/log/bash-history-$(date "+%Y-%m-%d").log; fi;'
 PROMPT_COMMAND=${MY_HISTORY_PROMPT_COMMAND}${PROMPT_COMMAND}
