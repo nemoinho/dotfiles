@@ -184,7 +184,8 @@ augroup configgroup
     autocmd FileType asciidoc nnoremap <silent> <C-s> :call system('asciidoctor-pdf *.adoc')<CR>
 
     autocmd BufRead,BufNewFile diary.wiki VimwikiDiaryGenerateLinks
-    autocmd BufRead,BufNewFile *.wiki Goyo 80 | set wrap
+    autocmd BufRead,BufNewFile *.wiki set wrap nonumber norelativenumber
+    "autocmd BufRead,BufNewFile *.wiki Goyo 80 | set wrap
     autocmd FileType vimwiki set tabstop=2 softtabstop=2 shiftwidth=2 expandtab foldlevel=10
     autocmd FileType vimwiki nnoremap <Leader>d :VimwikiDiaryIndex<CR>
     autocmd FileType vimwiki nnoremap <Leader>to :VimwikiTOC<CR>
