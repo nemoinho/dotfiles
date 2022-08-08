@@ -73,3 +73,6 @@ alias wiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
 
 # Enable autocompletion for "config" to manage dotfiles
 __git_complete config __git_main
+
+[ -s "$XDG_CONFIG_HOME/bash/local-config" ] && . "$XDG_CONFIG_HOME/bash/local-config"
+
