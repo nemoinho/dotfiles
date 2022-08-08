@@ -76,6 +76,9 @@ Plugin 'git@github.com:mattn/emmet-vim.git'
 " Add a status/tabline at the bottom
 Plugin 'git@github.com:vim-airline/vim-airline.git'
 
+" A calendar-integration
+Plugin 'git@github.com:mattn/calendar-vim.git'
+
 call vundle#end()
 " End: Manage plugins
 filetype plugin on
