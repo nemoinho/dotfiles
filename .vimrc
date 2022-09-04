@@ -92,6 +92,7 @@ let g:vimwiki_table_mappings = 0
 let g:vimwiki_folding = 'expr'
 let g:vimwiki_list = [{'path': '~/Development/nemoinho/gitea.nehrke.info/nemoinho/vimwiki/', 'auto_export': 1}]
 let g:vimwiki_autowriteall = 0
+let g:vimwiki_url_maxsave = 0
 let g:NERDTreeGitStatusShowIgnored = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
