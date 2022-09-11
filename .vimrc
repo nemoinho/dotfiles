@@ -152,6 +152,7 @@ nnoremap <Leader>gl :Git lg<CR>
 nnoremap <Leader>gp :Git push -u origin<CR>
 nnoremap <Leader>gs :Git status<CR>
 nnoremap <Leader>tw :set textwidth=72<CR>
+nnoremap <Leader>go :Git pull<CR>
 
 " Install these files to ~/.vim/spell/
 " http://ftp.vim.org/vim/runtime/spell/en.utf-8.spl
