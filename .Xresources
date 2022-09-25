@@ -2,3 +2,4 @@ URxvt.perl-ext-common: default,matcher,resize-font
 URxvt.url-launcher: /usr/bin/x-www-browser
 URxvt.matcher.button: Ctrl-1
 URxvt.matcher.rend.0: Uline
+URxvt.pointerBlank: true
