@@ -123,6 +123,15 @@ highlight CusrsorLine ctermbg=green
 
 colorscheme gruvbox8
 
+" ease CTRL-] since it's very hard to type on german keyboards
+" However I can't just remap the command to the matching position since this
+" is not a valid input for most unix-terminals. Therefore I just drop the
+" CTRL-prefix and use the letter where the bracket would be on us keyboards.
+" See: https://stackoverflow.com/a/16748339/4316528
+nnoremap ä <C-]>
+" <C-T> just don't work right now and that seems like a convenient keybinding
+nnoremap ö <C-T>
+
 " General utilities
 nnoremap <leader>cd :cd %:p:h<CR>
 nnoremap <Leader>gg :Goyo<CR>
