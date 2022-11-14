@@ -47,6 +47,8 @@ PROMPT_COMMAND=${MY_HISTORY_PROMPT_COMMAND}${PROMPT_COMMAND}
 
 which fly &>/dev/null && . <(fly completion --shell bash)
 
+which kubectl &>/dev/null && . <(kubectl completion bash)
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$XDG_CONFIG_HOME/sdkman"
 [ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ] && . "$SDKMAN_DIR/bin/sdkman-init.sh"
