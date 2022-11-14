@@ -71,6 +71,9 @@ alias markdown_pdf="docker run --rm -v \$PWD:/opt/docs auchida/markdown-pdf mark
 alias vimwiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
 alias wiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
 
+export LESS='-R'
+export LESSOPEN='|~/.local/bin/lessfilter %s'
+
 # Enable autocompletion for "config" to manage dotfiles
 __git_complete config __git_main
 
