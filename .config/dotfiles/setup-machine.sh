@@ -19,6 +19,9 @@ else
         curl -sSL https://apt.enpass.io/keys/enpass-linux.key | sudo tee /etc/apt/trusted.gpg.d/enpass.asc
         sudo apt-get update
         sudo apt-get install \
+            apt-transport-https \
+            ca-certificates \
+            gnupg \
             git \
             wget \
             asciidoctor \
@@ -30,6 +33,38 @@ else
             i3status \
             rofi \
             enpass
+        while true
+        do
+            echo ""
+            read -p "Is this installation for work? [Yn] " yn </dev/tty
+            case $yn in
+                [Yy]*|"")
+                    CHROME_DEB=google-chrome-stable_current_amd64.deb
+                    curl -sSL --output-dir $HOME/Downloads -O https://dl.google.com/linux/direct/$CHROME_DEB
+                    sudo apt-get install \
+                        openconnect \
+                        network-manager-openconnect \
+                        network-manager-openconnect-gnome \
+                        $HOME/Downloads/$CHROME_DEB
+                    break;;
+                [Nn]*) break;;
+                *) echo "Please answer yes or no.";;
+            esac
+        done
+        while true
+        do
+            echo ""
+            read -p "Is gcloud required? [Yn] " yn </dev/tty
+            case $yn in
+                [Yy]*|"")
+                    echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
+                    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /usr/share/keyrings/cloud.google.gpg > /dev/null
+                    sudo apt-get update && sudo apt-get install google-cloud-cli
+                    break;;
+                [Nn]*) break;;
+                *) echo "Please answer yes or no.";;
+            esac
+        done
     else
         echo Unsupported system
         exit 1
