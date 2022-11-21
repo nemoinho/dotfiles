@@ -33,6 +33,14 @@ else
             i3status \
             rofi \
             enpass
+        # install icon-font which I use for i3status
+        MATERIAL_DESIGN_FONT_ZIP=MaterialDesign-Webfont-4.9.95.zip
+        curl -sSL --output-dir $HOME/Downloads -o "$MATERIAL_DESIGN_FONT_ZIP" https://github.com/Templarian/MaterialDesign-Webfont/archive/v4.9.95.zip
+        mkdir -p $HOME/.local/share/fonts || true
+        unzip -jod $HOME/.local/share/fonts/ "$HOME/Downloads/$MATERIAL_DESIGN_FONT_ZIP" MaterialDesign-Webfont-4.9.95/fonts/materialdesignicons-webfont.ttf
+        fc-cache -fv
+
+        # handle work-setup
         while true
         do
             echo ""
@@ -51,6 +59,8 @@ else
                 *) echo "Please answer yes or no.";;
             esac
         done
+
+        # handle cli's for clouds
         while true
         do
             echo ""
