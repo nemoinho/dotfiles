@@ -36,9 +36,14 @@ unset _osname
 
 # clone dotfiles for fast startup
 GIT_DIR=$HOME/Development/nemoinho/gitea.nehrke.info/nemoinho/dotfiles
-GIT_REMOTE=git@gitea.nehrke.info:nemoinho/dotfiles.git
-git clone --separate-git-dir=$GIT_DIR $GIT_REMOTE $HOME/tmp-dotfiles
-rm -r ~/tmp-dotfiles
+if [ ! -d "$GIT_DIR" ]
+then
+    GIT_REMOTE=git@gitea.nehrke.info:nemoinho/dotfiles.git
+    git clone --separate-git-dir=$GIT_DIR $GIT_REMOTE $HOME/tmp-dotfiles
+    rm -r ~/tmp-dotfiles
+else
+    /usr/bin/git --git-dir "$GIT_DIR" --work-tree "$HOME" pull
+fi
 alias config='/usr/bin/git --git-dir=$GIT_DIR --work-tree=$HOME'
 config config --local status.showUntrackedFiles no
 config checkout
