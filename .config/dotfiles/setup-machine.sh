@@ -31,6 +31,9 @@ else
             i3 \
             i3lock \
             i3status \
+            scrot \
+            imagemagick \
+            libxcb-composite0 \
             rofi \
             oathtool \
             neovim \
