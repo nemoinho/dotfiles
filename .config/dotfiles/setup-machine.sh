@@ -21,7 +21,11 @@ else
             wget \
             asciidoctor \
             bash-completion \
-            vim
+            vim \
+            i3 \
+            i3lock \
+            i3status \
+            rofi
     else
         echo Unsupported system
         exit 1
