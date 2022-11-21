@@ -36,17 +36,18 @@ unset _osname
 
 # clone dotfiles for fast startup
 GIT_DIR=$HOME/Development/nemoinho/gitea.nehrke.info/nemoinho/dotfiles
+config='/usr/bin/git --git-dir '"$GIT_DIR"' --work-tree '"$HOME"''
 if [ ! -d "$GIT_DIR" ]
 then
     GIT_REMOTE=git@gitea.nehrke.info:nemoinho/dotfiles.git
     git clone --separate-git-dir=$GIT_DIR $GIT_REMOTE $HOME/tmp-dotfiles
     rm -r ~/tmp-dotfiles
 else
-    /usr/bin/git --git-dir "$GIT_DIR" --work-tree "$HOME" pull
+    $config pull
 fi
-alias config='/usr/bin/git --git-dir=$GIT_DIR --work-tree=$HOME'
-config config --local status.showUntrackedFiles no
-config checkout
+alias config="$config"
+$config config --local status.showUntrackedFiles no
+$config checkout
 
 # reload bash_profile to configure the current shell with the just installed dotfiles
 . ~/.bash_profile
