@@ -13,7 +13,7 @@ then
         bash-completion \
         vim
 else
-    if [ $(which apt-get &>/dev/null) ]
+    if [ $(which apt-get) ]
     then
         sudo apt-get update
         sudo apt-get install \
