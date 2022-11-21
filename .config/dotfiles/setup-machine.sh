@@ -40,6 +40,7 @@ else
         mkdir -p $HOME/.local/share/fonts || true
         unzip -jod $HOME/.local/share/fonts/ "$HOME/Downloads/$MATERIAL_DESIGN_FONT_ZIP" MaterialDesign-Webfont-4.9.95/fonts/materialdesignicons-webfont.ttf
         fc-cache -fv
+        rm "$HOME/Downloads/$MATERIAL_DESIGN_FONT_ZIP"
 
         # handle work-setup
         while true
@@ -55,6 +56,7 @@ else
                         network-manager-openconnect \
                         network-manager-openconnect-gnome \
                         $HOME/Downloads/$CHROME_DEB
+                    rm $HOME/Downloads/$CHROME_DEB
                     break;;
                 [Nn]*) break;;
                 *) echo "Please answer yes or no.";;
