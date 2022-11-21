@@ -22,6 +22,7 @@ else
             asciidoctor \
             bash-completion \
             vim \
+            rxvt-unicode \
             i3 \
             i3lock \
             i3status \
@@ -68,5 +69,8 @@ nvm install node
 export NVM_DIR="$XDG_CONFIG_HOME/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# setup defaults
+sudo update-alternatives --set x-terminal-emulator /usr/bin/urxvt
 
 echo "ready for work :-)"
