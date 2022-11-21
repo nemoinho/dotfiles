@@ -33,6 +33,7 @@ else
             i3status \
             rofi \
             oathtool \
+            neovim \
             enpass
         # install icon-font which I use for i3status
         MATERIAL_DESIGN_FONT_ZIP=MaterialDesign-Webfont-4.9.95.zip
@@ -122,6 +123,10 @@ export NVM_DIR="$XDG_CONFIG_HOME/nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # setup defaults
-sudo update-alternatives --set x-terminal-emulator /usr/bin/urxvt
+if [ $(which update-alternatives) ]
+then
+    sudo update-alternatives --set x-terminal-emulator /usr/bin/urxvt
+    sudo update-alternatives --set vim /usr/bin/nvim
+fi
 
 echo "ready for work :-)"
