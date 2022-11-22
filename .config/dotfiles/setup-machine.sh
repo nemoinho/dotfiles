@@ -37,6 +37,8 @@ else
             rofi \
             oathtool \
             neovim \
+            graphviz \
+            jq \
             enpass
         # install icon-font which I use for i3status
         MATERIAL_DESIGN_FONT_ZIP=MaterialDesign-Webfont-4.9.95.zip
