@@ -151,9 +151,9 @@ if has('nvim')
 endif
 
 " Handle nerdtree and other utility-windows
-nnoremap <Leader>n :NERDTreeFocus<CR>
+nnoremap <Leader>, :NERDTreeFocus<CR>
 nnoremap <Leader>c :NERDTreeClose<CR>
-nnoremap <Leader>, :NERDTreeToggle<CR>
+nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>t :TagbarToggle<CR>
 nnoremap <Leader>u :UndotreeToggle<CR>
 
