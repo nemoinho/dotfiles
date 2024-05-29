@@ -99,6 +99,7 @@ config='/usr/bin/git --git-dir '"$GIT_DIR"' --work-tree '"$HOME"''
 if [ ! -d "$GIT_DIR" ]
 then
     GIT_REMOTE=git@gitea.nehrke.info:nemoinho/dotfiles.git
+    mkdir -p "$(dirname "$GIT_DIR")"
     git clone --separate-git-dir=$GIT_DIR $GIT_REMOTE $HOME/tmp-dotfiles
     rm -r ~/tmp-dotfiles
 else
