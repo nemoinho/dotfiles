@@ -102,10 +102,10 @@ then
     git clone --separate-git-dir=$GIT_DIR $GIT_REMOTE $HOME/tmp-dotfiles
     rm -r ~/tmp-dotfiles
 else
-    /usr/bin/git --git-dir "$GIT_DIR" --work-tree "$HOME" pull
+    /usr/bin/git --git-dir "$GIT_DIR" --work-tree "$HOME" pull || true
 fi
-/usr/bin/git --git-dir "$GIT_DIR" --work-tree "$HOME" config --local status.showUntrackedFiles no
-/usr/bin/git --git-dir "$GIT_DIR" --work-tree "$HOME" checkout
+/usr/bin/git --git-dir "$GIT_DIR" --work-tree "$HOME" config --local status.showUntrackedFiles no || true
+/usr/bin/git --git-dir "$GIT_DIR" --work-tree "$HOME" checkout || true
 
 # reload bash_profile to configure the current shell with the just installed dotfiles
 . ~/.bash_profile
