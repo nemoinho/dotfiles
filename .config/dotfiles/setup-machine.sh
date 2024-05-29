@@ -15,7 +15,7 @@ then
 else
     if [ $(which apt-get) ]
     then
-        sudo apt-get install nala gpg curl tee
+        sudo apt-get install nala gpg curl
         echo "deb [signed-by=/etc/apt/keyrings/enpass.gpg] https://apt.enpass.io/ stable main" | sudo tee /etc/apt/sources.list.d/enpass.list
         curl -sSL https://apt.enpass.io/keys/enpass-linux.key | sudo gpg --dearmor -o /etc/apt/keyrings/enpass.gpg
         sudo nala update
