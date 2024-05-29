@@ -15,10 +15,11 @@ then
 else
     if [ $(which apt-get) ]
     then
-        echo "deb https://apt.enpass.io/ stable main" | sudo tee /etc/apt/sources.list.d/enpass.list
-        curl -sSL https://apt.enpass.io/keys/enpass-linux.key | sudo tee /etc/apt/trusted.gpg.d/enpass.asc
-        sudo apt-get update
-        sudo apt-get install \
+        sudo apt-get install nala gpg curl tee
+        echo "deb [signed-by=/etc/apt/keyrings/enpass.gpg] https://apt.enpass.io/ stable main" | sudo tee /etc/apt/sources.list.d/enpass.list
+        curl -sSL https://apt.enpass.io/keys/enpass-linux.key | sudo gpg --dearmor -o /etc/apt/keyrings/enpass.gpg
+        sudo nala update
+        sudo nala install \
             apt-transport-https \
             ca-certificates \
             gnupg \
@@ -57,7 +58,7 @@ else
                 [Yy]*|"")
                     CHROME_DEB=google-chrome-stable_current_amd64.deb
                     curl -sSL --output-dir $HOME/Downloads -O https://dl.google.com/linux/direct/$CHROME_DEB
-                    sudo apt-get install \
+                    sudo nala install \
                         openconnect \
                         network-manager-openconnect \
                         network-manager-openconnect-gnome \
@@ -78,7 +79,7 @@ else
                 [Yy]*|"")
                     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
                     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /usr/share/keyrings/cloud.google.gpg > /dev/null
-                    sudo apt-get update && sudo apt-get install google-cloud-cli
+                    sudo nala update && sudo nala install google-cloud-cli
                     break;;
                 [Nn]*) break;;
                 *) echo "Please answer yes or no.";;
