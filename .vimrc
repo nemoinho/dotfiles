@@ -209,6 +209,9 @@ endif
 
 augroup configgroup
     autocmd!
+    autocmd BufRead,BufNewFile ~/.config/git/* set filetype=gitconfig
+    autocmd FileType gitconfig set tabstop=4 softtabstop=8 shiftwidth=0 noexpandtab
+    autocmd FileType terraform set tabstop=2 softtabstop=2 shiftwidth=0 expandtab foldlevel=10
     autocmd FileType javascript set tabstop=2 softtabstop=2 shiftwidth=2 expandtab foldlevel=5
     autocmd FileType yaml set tabstop=2 softtabstop=2 shiftwidth=2 expandtab foldlevel=4
 
@@ -217,9 +220,6 @@ augroup configgroup
 
     " Copy global wrap in diff (This way I can use the same behavior in diff as in normal views)
     autocmd FilterWritePre * if &diff | setlocal wrap< | endif
-
-    autocmd FileType asciidoc nnoremap <silent> <C-a> :call system('asciidoctor *.adoc')<CR>
-    autocmd FileType asciidoc nnoremap <silent> <C-s> :call system('asciidoctor-pdf *.adoc')<CR>
 
     autocmd BufRead,BufNewFile diary.wiki VimwikiDiaryGenerateLinks
     autocmd BufRead,BufNewFile *.wiki set wrap nonumber norelativenumber
