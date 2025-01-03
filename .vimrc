@@ -102,6 +102,7 @@ let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 let g:snipMate = { 'snippet_version' : 1 }
 let g:tagbar_ctags_bin = '~/.local/opt/ctags/bin/ctags'
+let g:ctrlp_custom_ignore = 'node_modules\|dist'
 
 set bg=dark
 " Settings
