@@ -1,0 +1,122 @@
+[core]
+	# Use vim as commit-message editor
+	editor = vim
+
+	# Don't wrap lines on paged views such as diff or log
+	page = less -S
+
+	# Just use delta as diff-viewer by default, note install: apt install git-delta
+	pager = delta
+[diff]
+	# Use histogram in favor of readability over size for diffs
+	algorithm = histogram
+[pull]
+	# prefer to rebase local branches on remote changes instead of merging
+	rebase = true
+[merge]
+	# stash changes before merging remote changes this is very handy in conjunction with "pull.rebase=true"
+	autoStash = true
+
+	# provide more information about the situation before the changes in case of conflicts
+	conflictstyle = zdiff3
+[delta]
+	navigate = true
+[interactive]
+	diffFilter = delta --color-only
+[alias]
+	# Show all configured alias
+	alias = config --get-regexp ^alias\\.
+
+	# Manipulate the last commit
+	amend = commit --amend
+
+	# Just add any additional change to the last commit and push it
+	ash = "!git add .; git cane; git fush"
+
+	# Show all authors and their commit count in descending order
+	authors = "!git log --format='%aN <%aE>' | awk '{arr[$0]++} END{for (i in arr){printf \"%6s  %s\\n\", arr[i], i;}}' | sort -rn"
+
+	# Checkout a new branch from the current HEAD and use it instantly, e.g. git bc my-new-local-branch
+	bc = checkout -b
+
+	# Reset ALL changed files, even new and deleted, similiar but much faster to `rm -rf * && git reset --hard HEAD`
+	bust = "!git restore --staged .; git co -- .; git clean -fd"
+
+	# Shortcut to change last commit without changing the commit-message
+	cane = commit --amend --no-edit
+
+	# Same like bc and just a help to prevent typos
+	cb = checkout -b
+
+	# Just a convenience alias for the first commit of a new project
+	cf = commit --allow-empty -m 'Initial commit'
+
+	# Shortcut for checkout, we are all lazy
+	co = checkout
+
+	# Show the changes which will be commited
+	dc = diff --cached
+
+	# Fetch all remote-changes, but don't merge local branches!
+	fa = fetch --all
+
+	# Mark a change as a fixup to a given commit, e.g. `git fix HEAD~2`, see git commit --help
+	fix = commit --fixup
+
+	# Fetch all remote-changes from origin, but don't merge local branches!
+	fo = fetch origin
+
+	# Perform a push with force but only if there are no remote changes which we don't know already!
+	fush = push --force-with-lease
+
+	# Use vimdiff to view current changes
+	gt = difftool --tool=vimdiff -y
+
+	# Sometimes you want to ignore files from git, but can't list them in .gitignore
+	# Manually ignored files are risky! Try always to use stash or commit instead!
+	ignore = update-index --assume-unchanged
+
+	# Bring manually ignored files back on track
+	ignorenot = update-index --no-assume-unchanged
+
+	# Show a list of manually ignored files
+	ignoreshow = ls-files -v | grep '^h'
+
+	# Just show a verbose log of the last 7 commits
+	last = log -7 --color --graph HEAD
+
+	# Show a graph of all changes within the repository
+	lg = log --graph --all --date-order --format='%C(yellow)%h %C(bold red)%d %Creset%s %Cgreen(%ar) %C(bold blue)%an <%ae>'
+
+	# Like 'lg' but with a ISO 8601-like timestamp
+	lgi = log --graph --all --date-order --format='%C(yellow)%h %C(bold red)%d %Creset%s %Cgreen(%ai) %C(bold blue)%an <%ae>'
+
+	# Show a graph of only the current branch down to the development branch
+	lgb = log --graph --date-order --format='%C(yellow)%h %C(bold red)%d %Creset%s %Cgreen(%cr) %C(bold blue)%an <%ae>'
+
+	# Reset the commiter inside of a rebase-step to the current user
+	# Danger operation and only meaningful inside a rebase-process
+	mail-reset = "!bash -c 'export GIT_AUTHOR_DATE=$(git log -1 --pretty=format:%ad); export GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE; git commit --amend --no-edit --author=\"$(git config user.name) <$(git config user.email)>\"; unset GIT_AUTHOR_DATE; unset GIT_COMMITTER_DATE'"
+
+	# Open interactive rebase-console to given commit, e.g. `git ri HEAD~3`
+	ri = rebase -i
+
+	# Apply fixup and squach commits, see git commit --help
+	ria = rebase -i --autosquash
+
+	# Just save all as it is and add a stupid commit message to it
+	save = "!git add .; git commit -m save"
+
+	# Mark a change as a squach to a given commit similiar to `fix`
+	squ = commit --squash
+
+	# We are lazy and don't want to type status all the time
+	st = status
+
+	# Dispose all old branches which are already deleted remote, except of master and develop!
+	trash = "!git branch --merged | egrep -v \"(^\\*|master|develop)\" | xargs git branch -d; git remote prune origin"
+
+	# Unstage added files
+	unstage = reset HEAD
+[include]
+	path = local.config
