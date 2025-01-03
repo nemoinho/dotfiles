@@ -7,6 +7,9 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 # TODO: get rid of it by applying all relevant things in this file
 [ -d /etc/skel/.bashrc ] && . /etc/skel/.bashrc
 
+# ensure to delete files from ~/Downloads after 1 day
+(crontab -l 2>/dev/null; echo "*/5 * * * * /usr/bin/find $HOME/Downloads/ -type f -mtime +1 -exec /usr/bin/rm {} \;") | sort -u | crontab -
+
 # autocompletion
 [ -s /usr/share/bash-completion/completions/git ] && . /usr/share/bash-completion/completions/git
 which brew &>/dev/null && [ -s $(brew --prefix)/etc/bash_completion ] && .  $(brew --prefix)/etc/bash_completion 
