@@ -23,6 +23,8 @@
 	navigate = true
 [interactive]
 	diffFilter = delta --color-only
+[init]
+	defaultBranch = main
 [alias]
 	# Show all configured alias
 	alias = config --get-regexp ^alias\\.
