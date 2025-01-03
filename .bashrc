@@ -90,3 +90,5 @@ __git_complete c __git_main
 
 [ -s "$XDG_CONFIG_HOME/bash/local-config" ] && . "$XDG_CONFIG_HOME/bash/local-config"
 
+alias g=goto
+[ -s ~/Development/nemoinho/github.com/iridakos/goto/goto.sh ] && . ~/Development/nemoinho/github.com/iridakos/goto/goto.sh
