@@ -65,7 +65,8 @@ Plugin 'git@github.com:lifepillar/vim-gruvbox8'
 Plugin 'git@github.com:junegunn/goyo.vim'
 
 " Add support for hcl (terraform, packer, etc.)
-Plugin 'git@github.com:jvirtanen/vim-hcl'
+Plugin 'git@github.com:hashivim/vim-terraform'
+Plugin 'git@github.com:hashivim/vim-packer'
 
 " Add closing-tags in HTML/XML
 Plugin 'git@github.com:alvan/vim-closetag.git'
@@ -78,6 +79,9 @@ Plugin 'git@github.com:vim-airline/vim-airline.git'
 
 " A calendar-integration
 Plugin 'git@github.com:mattn/calendar-vim.git'
+
+" Papercolor
+Plugin 'git@github.com:NLKNguyen/papercolor-theme.git'
 
 call vundle#end()
 " End: Manage plugins
