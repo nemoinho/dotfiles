@@ -155,8 +155,8 @@ nnoremap <silent> <C-d> :botright terminal ++close<CR>
 inoremap <silent> <C-d> <Esc>:botright terminal ++close<CR>
 " nvim uses a different terminal approach – more vim-like actually :-P
 if has('nvim')
-    nnoremap <silent> <C-d> :botright :split term://bash<CR>i
-    inoremap <silent> <C-d> <Esc>:botright :split term://bash<CR>i
+    nnoremap <silent> <C-d> :botright :split term://bash<CR>:resize -100<CR>:set winheight=10 wfh<CR>i
+    inoremap <silent> <C-d> <Esc>:botright :split term://bash<CR>:resize -100<CR>:set winheight=10 wfh<CR>i
     tnoremap <Esc> <C-\><C-n>
 endif
 
