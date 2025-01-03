@@ -178,6 +178,7 @@ nnoremap <Leader>gp :Git push -u origin<CR>
 nnoremap <Leader>gs :Git status<CR>
 nnoremap <Leader>tw :set textwidth=72<CR>
 nnoremap <Leader>go :Git pull<CR>
+nnoremap <Leader>gf :set textwidth=100 colorcolumn=101 spell<CR>gqqmaggV/^#<CR>kgq`a
 
 " Install these files to ~/.vim/spell/
 " http://ftp.vim.org/vim/runtime/spell/en.utf-8.spl
