@@ -61,6 +61,8 @@ export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias config='/usr/bin/git --git-dir=$HOME/Development/nemoinho/gitea.nehrke.info/nemoinho/dotfiles --work-tree=$HOME'
+alias e='eza --icons --long --time-style=long-iso --group'
+alias ls='eza --time-style=long-iso --group'
 alias lg='git lg'
 alias lgb='git lgb'
 alias co='git checkout'
