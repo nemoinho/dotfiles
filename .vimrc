@@ -146,6 +146,10 @@ nnoremap <leader>m :make<CR>
 nnoremap <Leader>q :qa!<CR>
 nnoremap gv :vertical wincmd f<CR>
 
+" Snipmate
+imap <leader>l <Plug>snipMateNextOrTrigger
+smap <leader>l <Plug>snipMateNextOrTrigger
+
 " Open shell with Ctrl+d to enable a toggle between a shell and vim
 nnoremap <silent> <C-d> :botright terminal ++close<CR>
 inoremap <silent> <C-d> <Esc>:botright terminal ++close<CR>
