@@ -193,11 +193,18 @@ nnoremap <Leader>tc :Tabularize /;/l1<CR>
 nnoremap <Leader>tp :Tabularize /\|/l1<CR>
 nnoremap <Leader>tt :Tabularize /\|/l1<CR>
 
+" Open CtrlP faster
+nnoremap <Leader>p :CtrlP<CR>
+
 " diffs
 if &diff
     nnoremap <Leader>1 :diffget LOCAL<CR>
     nnoremap <Leader>2 :diffget BASE<CR>
     nnoremap <Leader>3 :diffget REMOTE<CR>
+    nnoremap <Leader>n ]c
+    nnoremap <Leader>p [c
+    nnoremap ä ]c
+    nnoremap ö [c
 endif
 
 augroup configgroup
