@@ -31,6 +31,7 @@
 	amend = commit --amend
 
 	# Just add any additional change to the last commit and push it
+	# !!! Never use this in a shared project !!!
 	ash = "!git add .; git cane; git fush"
 
 	# Show all authors and their commit count in descending order
@@ -54,7 +55,7 @@
 	# Shortcut for checkout, we are all lazy
 	co = checkout
 
-	# Show the changes which will be commited
+	# Show the changes which will be committed
 	dc = diff --cached
 
 	# Fetch all remote-changes, but don't merge local branches!
@@ -72,16 +73,6 @@
 	# Use vimdiff to view current changes
 	gt = difftool --tool=vimdiff -y
 
-	# Sometimes you want to ignore files from git, but can't list them in .gitignore
-	# Manually ignored files are risky! Try always to use stash or commit instead!
-	ignore = update-index --assume-unchanged
-
-	# Bring manually ignored files back on track
-	ignorenot = update-index --no-assume-unchanged
-
-	# Show a list of manually ignored files
-	ignoreshow = ls-files -v | grep '^h'
-
 	# Just show a verbose log of the last 7 commits
 	last = log -7 --color --graph HEAD
 
@@ -93,10 +84,6 @@
 
 	# Show a graph of only the current branch down to the development branch
 	lgb = log --graph --date-order --format='%C(yellow)%h %C(bold red)%d %Creset%s %Cgreen(%cr) %C(bold blue)%an <%ae>'
-
-	# Reset the commiter inside of a rebase-step to the current user
-	# Danger operation and only meaningful inside a rebase-process
-	mail-reset = "!bash -c 'export GIT_AUTHOR_DATE=$(git log -1 --pretty=format:%ad); export GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE; git commit --amend --no-edit --author=\"$(git config user.name) <$(git config user.email)>\"; unset GIT_AUTHOR_DATE; unset GIT_COMMITTER_DATE'"
 
 	# Open interactive rebase-console to given commit, e.g. `git ri HEAD~3`
 	ri = rebase -i
@@ -113,8 +100,8 @@
 	# We are lazy and don't want to type status all the time
 	st = status
 
-	# Dispose all old branches which are already deleted remote, except of master and develop!
-	trash = "!git branch --merged | egrep -v \"(^\\*|master|develop)\" | xargs git branch -d; git remote prune origin"
+	# Dispose all old branches which are already deleted remote, except of main, master and develop!
+	trash = "!git branch --merged | egrep -v \"(^\\*|main|master|develop)\" | xargs git branch -d; git remote prune origin"
 
 	# Unstage added files
 	unstage = reset HEAD
