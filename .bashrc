@@ -71,8 +71,11 @@ alias commit='git commit'
 alias gc='git commit'
 alias st='git status'
 alias gd='git diff'
+alias gdl='GIT_PAGER=less git diff'
 alias gt='git gt'
+alias gtl='GIT_PAGER=less git gt'
 alias gdc='gd --cached'
+alias gdcl='GIT_PAGER=less gd --cached'
 alias c='git commit'
 alias markdown_pdf="docker run --rm -v \$PWD:/opt/docs auchida/markdown-pdf markdown-pdf"
 alias vimwiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
@@ -83,6 +86,7 @@ export LESSOPEN='|~/.local/bin/lessfilter %s'
 
 # Enable autocompletion for "config" to manage dotfiles
 __git_complete config __git_main
+__git_complete c __git_main
 
 [ -s "$XDG_CONFIG_HOME/bash/local-config" ] && . "$XDG_CONFIG_HOME/bash/local-config"
 
