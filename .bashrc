@@ -93,4 +93,6 @@ __git_complete c __git_main
 alias g=goto
 [ -s ~/Development/nemoinho/github.com/iridakos/goto/goto.sh ] && . ~/Development/nemoinho/github.com/iridakos/goto/goto.sh
 
-[ -s /var/run/reboot-required ] && (>&2 echo -e "\n\e[01;31mReboot required to apply updates!\e[0m\n")
+[ -s /var/run/reboot-required ] && (>&2 echo -e "\n\e[01;31mReboot required to apply updates"'!'"\e[0m\n")
+
+[ -n "$(config status --short)" ] && (>&2 echo -e "\n\e[01;33mCurrent configuration is not committed"'!'"\e[0m\nRun "'"'"\e[01mconfig status\e[0m"'"'" for further information\n")
