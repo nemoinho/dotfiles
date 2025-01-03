@@ -115,6 +115,8 @@ set linebreak
 " Enable vim configs in the first or last lines of a file
 set modeline
 set modelineexpr
+" Avoid an extra line at the end of the file
+set nofixendofline
 
 set tabstop=4
 set shiftwidth=4
