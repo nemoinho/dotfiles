@@ -10,9 +10,15 @@
 [diff]
 	# Use histogram in favor of readability over size for diffs
 	algorithm = histogram
+
+	# indicate moved lines by using alternative colors for added and removed lines
+	colorMoved = zebra
 [pull]
 	# prefer to rebase local branches on remote changes instead of merging
 	rebase = true
+[mergetool]
+	# I don't need the backups of a merge
+	keepBackup = false
 [merge]
 	# stash changes before merging remote changes this is very handy in conjunction with "pull.rebase=true"
 	autoStash = true
@@ -20,7 +26,11 @@
 	# provide more information about the situation before the changes in case of conflicts
 	conflictstyle = zdiff3
 [delta]
+	# use n and N to move between diff sections
 	navigate = true
+
+	# show line numbers in delta diff view
+	line-numbers = true
 [interactive]
 	diffFilter = delta --color-only
 [init]
@@ -66,6 +76,9 @@
 	# Mark a change as a fixup to a given commit, e.g. `git fix HEAD~2`, see git commit --help
 	fix = commit --fixup
 
+	# Mark a change as fixup and try to squash it immediately into the original commit
+	fixit = "!bash -c 'TARGET_HASH=`git rev-parse "'"'"$1"'"'"`; git fix $TARGET_HASH && git ria $TARGET_HASH^' -e"
+
 	# Fetch all remote-changes from origin, but don't merge local branches!
 	fo = fetch origin
 
@@ -75,17 +88,32 @@
 	# Use vimdiff to view current changes
 	gt = difftool --tool=vimdiff -y
 
-	# Just show a verbose log of the last 7 commits
-	last = log -7 --color --graph HEAD
+	# Just show a verbose log of the last 6 commits
+	last = log -6 --color --reverse --format='%C(red)commit:     %H%n%C(green)Author:     %aN <%aE>%nAuthorDate: %ad%Creset%n%n%C(bold blue)%w(100,4,4)%s%Creset%n%n%b' HEAD
 
 	# Show a graph of all changes within the repository
-	lg = log --graph --all --date-order --format='%C(yellow)%h %C(bold red)%d %Creset%s %Cgreen(%ar) %C(bold blue)%an <%ae>'
+	lg = log --graph --all --date-order --format='%C(yellow)%h %C(bold red)%d %Creset%s %Cgreen(%ar) %C(bold blue)%aN <%aE>'
 
 	# Like 'lg' but with a ISO 8601-like timestamp
-	lgi = log --graph --all --date-order --format='%C(yellow)%h %C(bold red)%d %Creset%s %Cgreen(%ai) %C(bold blue)%an <%ae>'
+	lgi = log --graph --all --date-order --format='%C(yellow)%h %C(bold red)%d %Creset%s %Cgreen(%ai) %C(bold blue)%aN <%aE>'
 
 	# Show a graph of only the current branch down to the development branch
-	lgb = log --graph --date-order --format='%C(yellow)%h %C(bold red)%d %Creset%s %Cgreen(%cr) %C(bold blue)%an <%ae>'
+	lgb = log --graph --date-order --format='%C(yellow)%h %Creset%s %Cgreen(%ar) %C(bold blue)%aN <%aE>%C(bold red)%d'
+
+	# Like 'lgb' but with a ISO 8601-like timestamp
+	lgbi = log --graph --date-order --format='%C(yellow)%h %Creset%s %Cgreen(%ai) %C(bold blue)%aN <%aE>%C(bold red)%d'
+
+	# Like 'lgb' but with the committer timestamp
+	lgbc = log --graph --date-order --format='%C(yellow)%h %Creset%s %Cgreen(%ci) %C(bold blue)%aN <%aE>%C(bold red)%d'
+
+	# Show a graph of all commits and their Tickets
+	lgbt = log --graph --date-order --format='%C(yellow)%h%C(red)%d%Creset %s%n%C(bold blue)%aN <%aE> %Creset%Cgreen%ar %C(red)%(trailers:key=Ticket,separator=%x2C )%n'
+
+	# Like 'lgi' but with the committer timestamp
+	lgc = log --graph --all --date-order --format='%C(yellow)%h %C(bold red)%d %Creset%s %Cgreen(%ci) %C(bold blue)%aN <%aE>'
+
+	# Show a graph of all commits and their Tickets
+	lgt = log --graph --all --date-order --format='%C(yellow)%h%C(red)%d%Creset %s%n%C(bold blue)%aN <%aE> %Creset%Cgreen%ar %C(red)%(trailers:key=Ticket,separator=%x2C )%n'
 
 	# Open interactive rebase-console to given commit, e.g. `git ri HEAD~3`
 	ri = rebase -i
@@ -94,13 +122,16 @@
 	ria = rebase -i --autosquash
 
 	# Just save all as it is and add a stupid commit message to it
-	save = "!git add .; git commit -m save"
+	save = "!git add .; git commit -nm save"
 
 	# Mark a change as a squach to a given commit similiar to `fix`
 	squ = commit --squash
 
 	# We are lazy and don't want to type status all the time
 	st = status
+
+	# Show the summary of the last commit
+	sum = "!__sum() { git log --color -1 --format=\"%C(red)commit %H%n%C(green)Author:     %aN <%aE>%nAuthorDate: %ad%n%C(yellow)Commit:     %cN <%cE>%nCommitDate: %cd%Creset%n%n%C(bold blue)%s%Creset%n%n%b\" $1 | git interpret-trailers; }; __sum"
 
 	# Dispose all old branches which are already deleted remote, except of main, master and develop!
 	trash = "!git branch --merged | egrep -v \"(^\\*|main|master|develop)\" | xargs git branch -d; git remote prune origin"
