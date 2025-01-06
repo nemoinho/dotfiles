@@ -19,6 +19,9 @@
 [mergetool]
 	# I don't need the backups of a merge
 	keepBackup = false
+[rebase]
+	# stash changes before merging remote changes this is very handy in conjunction with "pull.rebase=true"
+	autoStash = true
 [merge]
 	# stash changes before merging remote changes this is very handy in conjunction with "pull.rebase=true"
 	autoStash = true
