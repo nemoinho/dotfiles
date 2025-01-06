@@ -124,6 +124,9 @@ set shiftwidth=4
 set expandtab
 set backspace=indent,eol,start
 
+" specific for MacVim set a pleasing font-size
+set guifont=Menlo\ Regular:h15
+
 highlight LineNr ctermfg=7
 highlight CusrsorLineNr ctermbg=green
 highlight CusrsorLine ctermbg=green
@@ -222,6 +225,7 @@ augroup configgroup
     " Copy global wrap in diff (This way I can use the same behavior in diff as in normal views)
     autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 
+    " vimwiki
     autocmd BufRead,BufNewFile diary.wiki VimwikiDiaryGenerateLinks
     autocmd BufRead,BufNewFile *.wiki set wrap nonumber norelativenumber
     "autocmd BufRead,BufNewFile *.wiki Goyo 80 | set wrap
@@ -229,6 +233,12 @@ augroup configgroup
     autocmd FileType vimwiki nnoremap <Leader>d :VimwikiDiaryIndex<CR>
     autocmd FileType vimwiki nnoremap <Leader>to :VimwikiTOC<CR>
     autocmd FileType vimwiki nnoremap <Leader>q :Goyo!<CR>:q<CR>
+    " On mac ctrl+space is occupied by their spotlight search...
+    " So I need a workaround to avoid apples stupid keyboard-thing
+    autocmd FileType vimwiki nnoremap <Leader><Space> :VimwikiToggleListItem<CR>j
+    autocmd FileType vimwiki nnoremap <Leader>m :VimwikiToggleListItem<CR>
+    autocmd FileType vimwiki nnoremap <A-Space> :VimwikiToggleListItem<CR>
+    " end of apple workarounds, I might get used to one of these...
     autocmd FileType vimwiki nnoremap <silent> <Leader>x :call system('git add . && git commit -m "Auto commit" && git push')<CR>
     autocmd FileType vimwiki nnoremap ZZ :Goyo!<CR>:x<CR>
     " Fix broken backspace functionality on mac
