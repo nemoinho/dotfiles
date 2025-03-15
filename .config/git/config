@@ -77,7 +77,7 @@
 	fa = fetch --all
 
 	# Mark a change as a fixup to a given commit, e.g. `git fix HEAD~2`, see git commit --help
-	fix = commit --fixup
+	fix = commit -n --fixup
 
 	# Mark a change as fixup and try to squash it immediately into the original commit
 	fixit = "!bash -c 'TARGET_HASH=`git rev-parse "'"'"$1"'"'"`; git fix $TARGET_HASH && git ria $TARGET_HASH^' -e"
