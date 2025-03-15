@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . ~/.profile
 export XMODIFIERS=""
-exec ~/.local/opt/idea/bin/idea.sh
+exec ~/.local/opt/idea/bin/idea
