@@ -1,3 +1,6 @@
 [font]
 size = 9.0
 normal = { family = "ComicMono", style = "Regular" }
+
+[env]
+WINIT_X11_SCALE_FACTOR = "1.55"
