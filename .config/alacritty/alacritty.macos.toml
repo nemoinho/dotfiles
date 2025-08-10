@@ -1,0 +1,47 @@
+import = [
+    "~/.config/alacritty/themes/themes/gruvbox_dark.toml"
+]
+
+[window]
+opacity = 0.96
+
+[colors]
+transparent_background_colors = true
+
+[font]
+size = 15.0
+offset = { x = 0, y = 3 }
+glyph_offset = { x = 0, y = -1 }
+# The NerdFont of ComitMono is created with: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
+# normal = { family = "ComicMono Nerd Font", style = "Regular" }
+normal = { family = "ComicMono Nerd Font", style = "Regular" }
+
+[[keyboard.bindings]]
+key = "Left"
+mods = "Alt"
+chars = "\u001BB"
+
+[[keyboard.bindings]]
+key = "Right"
+mods = "Alt"
+chars = "\u001BF"
+
+[[keyboard.bindings]]
+key = "Left"
+mods = "Super"
+chars = "\u0001"
+
+[[keyboard.bindings]]
+key = "Right"
+mods = "Super"
+chars = "\u0005"
+
+[[mouse.bindings]]
+mouse = "Middle"
+action = "Paste"
+
+[shell]
+program = "/bin/bash"
+
+[selection]
+save_to_clipboard = true
