@@ -28,6 +28,12 @@
 
 	# provide more information about the situation before the changes in case of conflicts
 	conflictstyle = zdiff3
+
+	# Just a good diff-tool, mostly
+	tool = vimdiff
+
+	# List all the applied commits in the message of the merge-commit
+	summary = true
 [delta]
 	# use n and N to move between diff sections
 	navigate = true

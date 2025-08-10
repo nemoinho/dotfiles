@@ -9,3 +9,16 @@ export XDG_STATE_HOME=$HOME/.local/state
 [ -d "$HOME/.config/nvm/current/bin" ] && PATH="$HOME/.config/nvm/current/bin:$PATH"
 [ -d "$HOME/.local/opt/go/bin" ] && PATH="$HOME/.local/opt/go/bin:$PATH"
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
+
+## the following is macos specific foo
+# just why!?!
+[ -d "$HOME/Library/Python/3.9/bin" ] && PATH="$PATH:$HOME/Library/Python/3.9/bin"
+
+# docker desktop...
+[ -d "/usr/local/bin" ] && PATH="/usr/local/bin:$PATH"
+
+# brew...
+[ -f "/opt/homebrew/bin/brew" ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# as far as I remember only needed for liquibase...
+[ -d "/opt/homebrew/opt/libpg/bin" ] && export PATH="/opt/homebrew/opt/libpg/bin:$PATH"

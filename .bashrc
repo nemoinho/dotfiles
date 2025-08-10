@@ -1,4 +1,6 @@
-[[ -f ~/.profile ]] && . ~/.profile
+export SHELL=/bin/bash
+
+[ -z "$XDG_CONFIG_HOME" ] && [ -f "$HOME/.profile" ] && . "$HOME/.profile"
 
 # Shut off deprecation warning of bash on macos
 export BASH_SILENCE_DEPRECATION_WARNING=1
@@ -8,7 +10,7 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 [ -d /etc/skel/.bashrc ] && . /etc/skel/.bashrc
 
 # ensure to delete files from ~/Downloads after 1 day
-(crontab -l 2>/dev/null; echo "*/5 * * * * /usr/bin/find $HOME/Downloads/ -type f -mtime +1 -exec /usr/bin/rm {} \;") | sort -u | crontab -
+(crontab -l 2>/dev/null; echo "*/5 * * * * /usr/bin/find $HOME/Downloads/ -type f -mtime +1 -exec $(which rm) {} \;") | sort -u | crontab -
 
 # autocompletion
 [ -s /usr/share/bash-completion/completions/git ] && . /usr/share/bash-completion/completions/git
@@ -20,20 +22,18 @@ which brew &>/dev/null && [ -s $(brew --prefix)/etc/bash_completion ] && .  $(br
 GIT_PROMPT_SH=/usr/lib/git-core/git-sh-prompt
 
 # newtons vegetable with brew installed
-[ ! -d $(dirname $GIT_PROMPT_SH) ] && GIT_PROMPT_SH=/usr/local/etc/bash_completion.d/git-prompt.sh
+[ ! -e "$GIT_PROMPT_SH" ] && (which brew > /dev/null) && GIT_PROMPT_SH="$(brew --prefix)/opt/git/etc/bash_completion.d/git-prompt.sh"
 
-if [ -d $(dirname $GIT_PROMPT_SH) ]; then
-    PS1='\033[01;32m\u@\h\033[0m: \033[01;34m\w\033[0m \t\n\$ '
-    export GIT_PS1_SHOWCOLORHINTS=1 
-    export GIT_PS1_SHOWDIRTYSTATE=1
-    export GIT_PS1_SHOWSTASHSTATE=1
-    export GIT_PS1_SHOWUNTRACKEDFILES=1
-    export GIT_PS1_SHOWUPSTREAM='auto'
-    if [ -f $GIT_PROMPT_SH ]; then
-        . $GIT_PROMPT_SH
-        MY_GIT_PROMPT_COMMAND='__git_ps1 "\033[01;32m\u@\h\033[0m: \033[01;34m\w\033[0m \t\n" "\\\$ " "(%s) "'
-        PROMPT_COMMAND=${MY_GIT_PROMPT_COMMAND}${PROMPT_COMMAND}
-    fi
+# Note that the var "NEMO_GIT_STATUS" is only set if in a git directory!
+PS1='\033[01;32m\u@\h\033[0m: \033[01;34m\w\033[0m \t\n$NEMO_GIT_STATUS\$ '
+export GIT_PS1_SHOWCOLORHINTS=1 
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM='auto'
+if [ -f $GIT_PROMPT_SH ]; then
+    . $GIT_PROMPT_SH
+    PROMPT_COMMAND='NEMO_GIT_STATUS="$(__git_ps1 | sed "s/^ //;s/)$/) /")"'
 fi
 
 [ ! -d $XDG_STATE_HOME/bash/log ] && mkdir -p $XDG_STATE_HOME/bash/log
@@ -48,10 +48,6 @@ PROMPT_COMMAND=${MY_HISTORY_PROMPT_COMMAND}${PROMPT_COMMAND}
 
 [ -s $XDG_CONFIG_HOME/broot/launcher/bash/br ] && . $XDG_CONFIG_HOME/broot/launcher/bash/br
 
-which fly &>/dev/null && . <(fly completion --shell bash)
-
-which kubectl &>/dev/null && . <(kubectl completion bash)
-
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$XDG_CONFIG_HOME/sdkman"
 [ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ] && . "$SDKMAN_DIR/bin/sdkman-init.sh"
@@ -60,7 +56,21 @@ export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# autocompletion
+__bash_completion_dir="$XDG_DATA_HOME/bash-completion/completions"
+which brew &>/dev/null && __bash_completion_dir="$(brew --prefix)/etc/bash_completion.d"
+
+mkdir -p "$__bash_completion_dir"
+
+which kubectl &> /dev/null && [ ! -f "$__bash_completion_dir/kubectl" ] && kubectl completion bash > "$__bash_completion_dir/kubectl"
+which fly &> /dev/null && [ ! -f "$__bash_completion_dir/fly" ] && fly completion --shell bash > "$__bash_completion_dir/fly"
+
+# macos needs this, I don't know why
+which brew &> /dev/null && . "$(brew --prefix)/etc/bash_completion"
+
+# standard alias
 alias config='/usr/bin/git --git-dir=$HOME/Development/nemoinho/gitea.nehrke.info/nemoinho/dotfiles --work-tree=$HOME'
+alias cz='(pushd $(git rev-parse --show-toplevel); $(which cz); popd)'
 alias e='eza --icons --long --time-style=long-iso --group'
 alias ls='eza --time-style=long-iso --group'
 alias lg='git lg'
@@ -91,8 +101,8 @@ __git_complete c __git_main
 [ -s "$XDG_CONFIG_HOME/bash/local-config" ] && . "$XDG_CONFIG_HOME/bash/local-config"
 
 alias g=goto
-[ -s ~/Development/nemoinho/github.com/iridakos/goto/goto.sh ] && . ~/Development/nemoinho/github.com/iridakos/goto/goto.sh
+[ -f ~/Development/nemoinho/github.com/iridakos/goto/goto.sh ] && . ~/Development/nemoinho/github.com/iridakos/goto/goto.sh
 
-[ -s /var/run/reboot-required ] && (>&2 echo -e "\n\e[01;31mReboot required to apply updates"'!'"\e[0m\n")
+[ -f /var/run/reboot-required ] && (>&2 echo -e "\n\e[01;31mReboot required to apply updates!\e[0m\n")
 
 [ -n "$(config status --short)" ] && (>&2 echo -e "\n\e[01;33mCurrent configuration is not committed"'!'"\e[0m\nRun "'"'"\e[01mconfig status\e[0m"'"'" for further information\n")
