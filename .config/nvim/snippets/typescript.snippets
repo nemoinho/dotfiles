@@ -1,0 +1,36 @@
+snippet xhandler Create initial handler for nuxt
+	import { defineEventHandler } from 'h3'
+	import { useRuntimeConfig } from 'nitropack/runtime'
+
+	export default defineEventHandler((event) => {
+	  ${0}
+	})
+
+snippet xrunconf Load runtime config in nuxt/nitro 
+	const ${1:config} = useRuntimeConfig()
+	${0}
+
+snippet xref Add ref
+	const ${1} = ref${3}(${2:''})
+	${0}
+
+snippet xcom Add computed
+	const ${1} = computed(() => ${2})
+	${0}
+
+snippet xfun Add a function in a const
+	const ${1} = (${2}) => ${4:{}}
+	$0
+
+snippet xstore Define a pinia store
+	import { defineStore } from 'pinia'
+	
+	export const use${2} = defineStore('$1', () => {
+	  $0
+	  return {
+	  }
+	})
+
+snippet xufetch Add a useFetch call
+	const { data: ${1:data} } = useFetch('${2}', {${3}})
+	$0

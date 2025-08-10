@@ -1,0 +1,44 @@
+snippet xscript Create initial skeleton
+	<script setup lang="ts">
+	${1}
+	</script>
+
+	<template>
+	  ${2:<div>$3</div>}
+	</template>
+
+snippet xpagemeta Add page meta
+	definePageMeta({ ${0} })
+
+snippet xulocalepath Add localePath
+	const ${1:localePath} = useLocalePath()
+
+snippet xlocalepath get locale localePath
+	localePath('${1}')
+
+snippet xlp get locale localePath
+	localePath('${1}')
+
+snippet xui18n Add useI18n
+	const { t${1} } = useI18n()
+	$0
+
+snippet xuroute Add useRoute
+	const ${1:route} = useRoute()
+	$0
+
+snippet xufetch Add a useFetch call
+	const { data: ${1:data} } = useFetch('${2}', {${3}})
+	$0
+
+snippet xref Add ref
+	const ${1} = ref${3}(${2:''})
+	${0}
+
+snippet xcom Add computed
+	const ${1} = computed(() => ${2})
+	${0}
+
+snippet xfun Add a function in a const
+	const ${1} = (${2}) => ${4:{}}
+	$0
