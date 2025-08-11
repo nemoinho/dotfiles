@@ -56,18 +56,6 @@ export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# autocompletion
-__bash_completion_dir="$XDG_DATA_HOME/bash-completion/completions"
-which brew &>/dev/null && __bash_completion_dir="$(brew --prefix)/etc/bash_completion.d"
-
-mkdir -p "$__bash_completion_dir"
-
-which kubectl &> /dev/null && [ ! -f "$__bash_completion_dir/kubectl" ] && kubectl completion bash > "$__bash_completion_dir/kubectl"
-which fly &> /dev/null && [ ! -f "$__bash_completion_dir/fly" ] && fly completion --shell bash > "$__bash_completion_dir/fly"
-
-# macos needs this, I don't know why
-which brew &> /dev/null && . "$(brew --prefix)/etc/bash_completion"
-
 # standard alias
 alias config='/usr/bin/git --git-dir=$HOME/Development/nemoinho/gitea.nehrke.info/nemoinho/dotfiles --work-tree=$HOME'
 alias cz='(pushd $(git rev-parse --show-toplevel); $(which cz); popd)'
@@ -90,9 +78,13 @@ alias c='git commit'
 alias markdown_pdf="docker run --rm -v \$PWD:/opt/docs auchida/markdown-pdf markdown-pdf"
 alias vimwiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
 alias wiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
+alias g=goto
 
-export LESS='-R'
-export LESSOPEN='|~/.local/bin/lessfilter %s'
+if [ -f .local/bin/lessfilter ]
+then
+  export LESS='-R'
+  export LESSOPEN='|~/.local/bin/lessfilter %s'
+fi
 
 # Enable autocompletion for "config" to manage dotfiles
 __git_complete config __git_main
@@ -100,8 +92,18 @@ __git_complete c __git_main
 
 [ -s "$XDG_CONFIG_HOME/bash/local-config" ] && . "$XDG_CONFIG_HOME/bash/local-config"
 
-alias g=goto
-[ -f ~/Development/nemoinho/github.com/iridakos/goto/goto.sh ] && . ~/Development/nemoinho/github.com/iridakos/goto/goto.sh
+# autocompletion
+__bash_completion_dir="$XDG_DATA_HOME/bash-completion/completions"
+which brew &>/dev/null && __bash_completion_dir="$(brew --prefix)/etc/bash_completion.d"
+
+mkdir -p "$__bash_completion_dir"
+
+which kubectl &> /dev/null && [ ! -f "$__bash_completion_dir/kubectl" ] && kubectl completion bash > "$__bash_completion_dir/kubectl"
+which fly &> /dev/null && [ ! -f "$__bash_completion_dir/fly" ] && fly completion --shell bash > "$__bash_completion_dir/fly"
+[ -f ~/Development/nemoinho/github.com/iridakos/goto/goto.sh ] && ln -s ~/Development/nemoinho/github.com/iridakos/goto/goto.sh "$__bash_completion_dir/goto"
+
+# macos needs this, I don't know why
+which brew &> /dev/null && . "$(brew --prefix)/etc/bash_completion"
 
 # reboot required notice
 [ -f /var/run/reboot-required ] && (>&2 echo -e "\n\033[01;31mReboot required to apply updates"'!'"\033[0m\n")
