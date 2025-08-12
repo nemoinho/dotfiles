@@ -12,12 +12,6 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 # ensure to delete files from ~/Downloads after 1 day
 (crontab -l 2>/dev/null; echo "*/5 * * * * /usr/bin/find $HOME/Downloads/ -type f -mtime +1 -exec $(which rm) {} \;") | sort -u | crontab -
 
-# autocompletion
-[ -s /usr/share/bash-completion/completions/git ] && . /usr/share/bash-completion/completions/git
-which brew &>/dev/null && [ -s $(brew --prefix)/etc/bash_completion ] && .  $(brew --prefix)/etc/bash_completion 
-
-[ -s /etc/bash_completion ] && . /etc/bash_completion
-
 # debian, ubuntu and so on
 GIT_PROMPT_SH=/usr/lib/git-core/git-sh-prompt
 
@@ -86,10 +80,6 @@ then
   export LESSOPEN='|~/.local/bin/lessfilter %s'
 fi
 
-# Enable autocompletion for "config" to manage dotfiles
-__git_complete config __git_main
-__git_complete c __git_main
-
 [ -s "$XDG_CONFIG_HOME/bash/local-config" ] && . "$XDG_CONFIG_HOME/bash/local-config"
 
 # autocompletion
@@ -100,10 +90,16 @@ mkdir -p "$__bash_completion_dir"
 
 which kubectl &> /dev/null && [ ! -f "$__bash_completion_dir/kubectl" ] && kubectl completion bash > "$__bash_completion_dir/kubectl"
 which fly &> /dev/null && [ ! -f "$__bash_completion_dir/fly" ] && fly completion --shell bash > "$__bash_completion_dir/fly"
-[ -f ~/Development/nemoinho/github.com/iridakos/goto/goto.sh ] && ln -s ~/Development/nemoinho/github.com/iridakos/goto/goto.sh "$__bash_completion_dir/goto"
+[ -f ~/Development/nemoinho/github.com/iridakos/goto/goto.sh ] && [ ! -f "$__bash_completion_dir/goto" ] && ln -s ~/Development/nemoinho/github.com/iridakos/goto/goto.sh "$__bash_completion_dir/goto"
 
-# macos needs this, I don't know why
+# load bash-completion
 which brew &> /dev/null && . "$(brew --prefix)/etc/bash_completion"
+[ -s /etc/bash_completion ] && . /etc/bash_completion
+
+# Enable autocompletion for "config" to manage dotfiles
+[ -s /usr/share/bash-completion/completions/git ] && . /usr/share/bash-completion/completions/git
+__git_complete config __git_main
+__git_complete c __git_main
 
 # reboot required notice
 [ -f /var/run/reboot-required ] && (>&2 echo -e "\n\033[01;31mReboot required to apply updates"'!'"\033[0m\n")
