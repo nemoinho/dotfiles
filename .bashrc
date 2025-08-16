@@ -101,6 +101,10 @@ which brew &> /dev/null && . "$(brew --prefix)/etc/bash_completion"
 __git_complete config __git_main
 __git_complete c __git_main
 
+# load goto alias (isn't looaded for alias by bash-completion, don't know why)
+[ -e "$__bash_completion_dir/goto" ] && . "$__bash_completion_dir/goto"
+unset __bash_completion_dir
+
 # reboot required notice
 [ -f /var/run/reboot-required ] && (>&2 echo -e "\n\033[01;31mReboot required to apply updates"'!'"\033[0m\n")
 
