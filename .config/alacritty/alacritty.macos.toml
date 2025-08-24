@@ -3,7 +3,8 @@ import = [
 ]
 
 [window]
-opacity = 0.96
+#opacity = 0.96
+opacity = 1
 
 [colors]
 transparent_background_colors = true
