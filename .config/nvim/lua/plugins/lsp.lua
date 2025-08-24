@@ -57,6 +57,7 @@ return {
 			configNamespace = 'typescript',
 		}
 		local home_dir = os.getenv('HOME')
+		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 		local capabilities = require("cmp_nvim_lsp").default_capabilities()
 		capabilities.textDocument.completion.completionItem.snippetSupport = true
 		local opts = {
@@ -67,7 +68,20 @@ return {
 		vim.lsp.config("bashls", opts)
 		vim.lsp.config("cssls", opts)
 		vim.lsp.config("docker_language_server", opts)
-		vim.lsp.config("eslint", {})
+		vim.lsp.config("eslint", {
+			on_attach = function(client, bufnr)
+				vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+				vim.api.nvim_create_autocmd("BufWritePre", {
+					group = augroup,
+					buffer = bufnr,
+					callback = function()
+						if vim.bo.filetype == "typescript" then
+							vim.lsp.buf.format()
+						end
+					end,
+				})
+			end,
+		})
 		vim.lsp.config("gopls", opts)
 		vim.lsp.config("harper_ls", { -- spelling and grammer checks
 			on_attach = on_attach,
