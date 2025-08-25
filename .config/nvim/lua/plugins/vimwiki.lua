@@ -4,6 +4,7 @@ vim.g.vimwiki_table_mappings = 0
 vim.g.vimwiki_list = { { path = wikipath, auto_export = 1 } }
 vim.g.vimwiki_autowriteall = 0
 vim.g.vimwiki_url_maxsave = 0
+vim.keymap.set("n", "<Leader>we", "<Cmd>VimwikiMakeDiaryNote<CR>")
 
 local vimwikiconfig = vim.api.nvim_create_augroup('VIMWIKI_CONFIG', { clear = true })
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
@@ -21,7 +22,6 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.keymap.set("n", "<Leader>ws", function()
 			vim.cmd("call system('sleep 2 && cd " .. wikipath .. " && git add . && git commit -m " .. '"Auto commit"' .. " && git push')")
 		end)
-		vim.keymap.set("n", "<Leader>we", "<Cmd>VimwikiMakeDiaryNote<CR>")
 	end,
 })
 
