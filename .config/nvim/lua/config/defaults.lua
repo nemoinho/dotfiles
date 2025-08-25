@@ -117,3 +117,12 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.tabstop = 4
 	end,
 })
+-- i3config
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "i3config",
+	group = configgroup,
+	callback = function()
+		vim.opt_local.foldlevel = 0
+		vim.opt_local.foldmethod = "marker"
+	end,
+})
