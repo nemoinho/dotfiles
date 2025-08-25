@@ -80,7 +80,7 @@ if vim.api.nvim_win_get_option(0, "diff") then
 end
 
 -- autocommands for specific files
-local configgroup = vim.api.nvim_create_augroup('configgroup', { clear = true })
+local configgroup = vim.api.nvim_create_augroup('MY_DEFAULTS', { clear = true })
 
 function fix_filetype(pattern, filetype)
 	vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {

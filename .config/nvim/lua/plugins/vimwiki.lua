@@ -4,7 +4,8 @@ vim.g.vimwiki_table_mappings = 0
 vim.g.vimwiki_list = { { path = wikipath, auto_export = 1 } }
 vim.g.vimwiki_autowriteall = 0
 vim.g.vimwiki_url_maxsave = 0
-local vimwikiconfig = vim.api.nvim_create_augroup('configgroup', { clear = true })
+
+local vimwikiconfig = vim.api.nvim_create_augroup('VIMWIKI_CONFIG', { clear = true })
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = "diary.wiki",
 	group = vimwikiconfig,
