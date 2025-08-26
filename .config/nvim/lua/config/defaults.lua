@@ -126,3 +126,13 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.foldmethod = "marker"
 	end,
 })
+-- snippets
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "snippets",
+	group = configgroup,
+	callback = function()
+		vim.opt_local.expandtab = false
+		vim.opt_local.shiftwidth = 2
+		vim.opt_local.tabstop = 4
+	end,
+})

@@ -1,0 +1,14 @@
+snippet _skeleton Create initial diary entry
+	= `strftime("%-d. %b")`: ${1:summary} =
+	%% `strftime("%Y-%m-%d")`
+
+	${0}
+
+snippet xdia Create initial diary entry
+	= `strftime("%-d. %b")`: ${1:summary} (xdia) =
+	%% `strftime("%Y-%m-%d")`
+
+	${0}
+
+snippet xtodo Create a new todo
+	* [ ] ${0}
