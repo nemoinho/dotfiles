@@ -92,9 +92,12 @@ function fix_filetype(pattern, filetype)
 	})
 end
 
+local home = vim.fn.expand("$HOME")
+
 -- fix filetypes
 fix_filetype("*Containerfile", "dockerfile")
-fix_filetype("~/.config/git/*", "gitconfig")
+fix_filetype(home.."/.config/git/*", "gitconfig")
+fix_filetype(home.."/.local/bin/*", "sh")
 
 -- adjust settings per filetype
 -- git
