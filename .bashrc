@@ -73,6 +73,8 @@ alias markdown_pdf="docker run --rm -v \$PWD:/opt/docs auchida/markdown-pdf mark
 alias vimwiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
 alias wiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
 alias g=goto
+alias ff="fd | fzf --preview 'my-cli-preview {}'"
+alias ffv="ff | xargs vim"
 
 if [ -f .local/bin/lessfilter ]
 then

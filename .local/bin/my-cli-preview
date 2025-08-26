@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+file="$1"
+
+print_repeated() {
+  local char="$1"
+  local lines="$2"
+  local columns="$3"
+  local linebreak="$4"
+  for i in `seq 1 $lines`
+  do
+    for j in `seq 1 $columns`
+    do
+      echo -n "$char"
+    done
+    echo -en "$linebreak"
+  done
+}
+mime="$(file -b --mime-type $file)"
+type="$(echo $mime | cut -d/ -f1)"
+
+if [ "$type" = "image" ] || [ "$mime" = "application/pdf" ]
+then
+  if [ "$TERM" = "xterm-kitty" ] || [ "$TERM" = "xterm-ghostty" ]
+  then
+    exec kitten icat --clear --transfer-mode=memory --stdin=no --place=$(($FZF_PREVIEW_COLUMNS))x$(($FZF_PREVIEW_LINES-1))@$(($COLUMNS/2))x2 "$file"
+  else
+    which viu >/dev/null && exec viu -s -w $FZF_PREVIEW_COLUMNS "$file"
+    if [ "$mime" = "image/svg+xml" ]
+    then
+      exec batcat --color=always -pp "$file"
+    else
+      print_repeated "╱" $(($FZF_PREVIEW_LINES/2-2)) $FZF_PREVIEW_COLUMNS "\n"
+      print_repeated "╱" 1 $(($FZF_PREVIEW_COLUMNS/2-15)) ""
+      print_repeated " " 1 30 ""
+      print_repeated "╱" 1 $(($FZF_PREVIEW_COLUMNS/2-15)) "\n"
+      print_repeated "╱" 1 $(($FZF_PREVIEW_COLUMNS/2-15)) ""
+      echo -n "  Binary cannot be previewed  "
+      print_repeated "╱" 1 $(($FZF_PREVIEW_COLUMNS/2-15)) "\n"
+      print_repeated "╱" 1 $(($FZF_PREVIEW_COLUMNS/2-15)) ""
+      print_repeated " " 1 30 ""
+      print_repeated "╱" 1 $(($FZF_PREVIEW_COLUMNS/2-15)) "\n"
+      print_repeated "╱" $(($FZF_PREVIEW_LINES/2-1)) $FZF_PREVIEW_COLUMNS "\n"
+    fi
+  fi
+else
+  kitten icat --clear --transfer-mode=memory --stdin=no
+  kitten icat --clear --transfer-mode=memory --stdin=no
+  exec batcat --color=always -pp "$file"
+fi
