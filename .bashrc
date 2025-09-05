@@ -82,7 +82,7 @@ which zoxide > /dev/null && eval "$(zoxide init bash)" && alias cd=z
 if [ -f .local/bin/lessfilter ]
 then
   export LESS='-R'
-  export LESSOPEN='|~/.local/bin/lessfilter %s'
+  export LESSOPEN='|lesspipe %s'
 fi
 
 [ -s "$XDG_CONFIG_HOME/bash/local-config" ] && . "$XDG_CONFIG_HOME/bash/local-config"
