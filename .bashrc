@@ -76,6 +76,9 @@ alias g=goto
 alias ff="fd | fzf --preview 'my-cli-preview {}'"
 alias ffv="ff | xargs vim"
 
+which fzf > /dev/null && fzf --bash > /dev/null && eval "$(fzf --bash)"
+which zoxide > /dev/null && eval "$(zoxide init bash)" && alias cd=z
+
 if [ -f .local/bin/lessfilter ]
 then
   export LESS='-R'
