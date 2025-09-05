@@ -4,42 +4,51 @@ Felix Nehrke <felix@nehrke.info>
 :source-highlighter: rouge
 
 [abstract]
-I'll use the https://news.ycombinator.com/item?id=11071754["bare repository and alias method"] to track my dotfiles.
+I use https://www.gnu.org/software/stow/[`stow`] to sync my dotfiles between the OS and this repository.
+
+== Requirements
+Install `git` and `stow` if not already present on the system.
+
+.Install via apt on Debian/Ubuntu
+[source,bash]
+sudo apt install git stow
+
+.Install via brew on macos
+[source,bash]
+brew install git stow
 
 == Usage
-Use all your familiar git commands but with `config` instead of `git`.
+Checkout this repository into `~/dotfiles` and apply run `stow` to sync the dotfiles.
+
+[IMPORTANT]
+The directory should be loacted directly in the HOME directory.
+Otherwise stow needs an additional flat `-t $HOME` everytime, which is a bit annoying!
 
 [source,bash]
-config status
-config add .vimrc
-config commit -m "Add vimrc"
-config add .config/redshift.conf
-config commit -m "Add redshift config"
-config push
+git clone git@gitea.nehrke.info:nemoinho/dotfiles.git ~/dotfiles # <1>
+cd $_
+stow --adopt . # <2>
+[ -n "$(git status --short)" ] && git restore . # <3>
 
-== Setup
+<1> Clone this repository
+<2> Create symlinks for all files managed by this repository, so that the file in the $HOME points to the file in this repository
+<3> In case of differences between existing files and the ones from this repository keep the version of the repository
 
-.Quick setup
+=== Removing files
+If a file is going to be removed make sure to remove the linked file as well.
+Otherwise we end up with a bunch of dangling files in `$HOME`!
+
+To automatically delete these dangling links we can use a git-hook as the following.
+That will remove the links pre-commit.
+
+.Setup git-hook to automatically remove links to deleted files
 [source,bash]
-curl -s https://gitea.nehrke.info/nemoinho/dotfiles/raw/branch/main/.config/dotfiles/setup-machine.sh | bash
-
-.Clone on new machine
-[source,bash]
-GIT_DIR=$HOME/Development/nemoinho/gitea.nehrke.info/nemoinho/dotfiles
-GIT_REMOTE=git@gitea.nehrke.info:nemoinho/dotfiles.git
-git clone --separate-git-dir=$GIT_DIR $GIT_REMOTE $HOME/tmp-dotfiles
-rm -r ~/tmp-dotfiles
-alias config='/usr/bin/git --git-dir=$GIT_DIR --work-tree=$HOME'
-config checkout
-config config --local status.showUntrackedFiles no
-
-.Initial setup
-[source,bash]
-GIT_DIR=$HOME/Development/nemoinho/gitea.nehrke.info/nemoinho/dotfiles
-GIT_REMOTE=git@gitea.nehrke.info:nemoinho/dotfiles.git
-git init --bare -b main $GIT_DIR
-alias config='/usr/bin/git --git-dir=$GIT_DIR --work-tree=$HOME'
-config config status.showUntrackedFiles no
-config remote add origin $GIT_REMOTE
-config push -u origin main
-
+cat <<EOF > .git/hooks/pre-commit
+#!/usr/bin/env bash
+set -e
+git status --short | grep -E '^D' | sed s/...// | while read f
+do
+  test -L "\$HOME/\$f" && rm "\$HOME/\$f"
+done
+EOF
+chmod +x .git/hooks/pre-commit
