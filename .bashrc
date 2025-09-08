@@ -113,4 +113,4 @@ unset __bash_completion_dir
 [ -f /var/run/reboot-required ] && (>&2 echo -e "\n\033[01;31mReboot required to apply updates"'!'"\033[0m\n")
 
 # config changed notice
-[ -n "$(config status --short)" ] && (>&2 echo -e "\n\033[01;33mCurrent configuration is not committed"'!'"\033[0m\nRun "'"'"\033[01mconfig status\033[0m"'"'" for further information\n")
+[ -n "$(cd dotfiles && git status --short)" ] && (>&2 echo -e "\n\033[01;33mCurrent configuration is not committed"'!'"\033[0m\nSwitch to ~/dotfiles and run "'"'"\033[01mgit status\033[0m"'"'" for further information\n")
