@@ -46,7 +46,7 @@ That will remove the links pre-commit.
 cat <<EOF > .git/hooks/pre-commit
 #!/usr/bin/env bash
 set -e
-git status --short | grep -E '^D' | sed s/...// | while read f
+git status --short | grep -E '^D|^R' | sed 's/...//;s/ -> .*//' | while read f
 do
   test -L "\$HOME/\$f" && rm "\$HOME/\$f"
 done
