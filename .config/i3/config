@@ -103,9 +103,9 @@ exec_always --no-startup-id compton --config ~/.config/compton.conf -b
 
 # TODO: move the following to Xresources or similar, it feels clunky here
 # switch to screensaver after 1 hour w/o interaction 
-exec xset s 3600 3600
+exec_always xset s 3600 3600
 # set a blazing fast keyboard repeat rate, and make it happen more quickly (defaults: 660/25) 
-exec xset r rate 250 100
+exec_always xset r rate 250 100
 
 # }}}
 
