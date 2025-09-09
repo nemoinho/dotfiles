@@ -3,8 +3,8 @@ set $mod Mod4
 set $lock screensaver
 set $terminal x-terminal-emulator
 #set $launcher dmenu_run -fn '-*-fixed-*-r-normal-*-*-120-*-*-*-*-iso8859-*' -nb '#000000' -nf '#FFFFFF' -sb '#1793d1'
-set $rofi ~/.local/bin/rofi
-set $autorandr ~/.local/bin/autorandr
+set $rofi /usr/bin/rofi -font "Roboto Sans 20" -l 6 -eh 1 -display-run ""
+set $autorandr /usr/bin/autorandr
 # firefox
 set $w01 "1 󰈹"
 # code
@@ -225,7 +225,7 @@ bind $mod+51 split v; exec $terminal
 
 # }}}
 # Start application                   ($mod+p) {{{
-bind $mod+33 exec $rofi
+bind $mod+33 exec $rofi -show run
 
 # }}}
 # Lock screen                         ($mod+Control+Shift+l) {{{
@@ -238,7 +238,7 @@ bind $mod+Shift+24 kill
 
 # }}}
 # Suspend / Shutdown                  ($mod+F12) {{{
-bindsym $mod+F12 exec "bash -c '$lock & sleep 3; systemctl suspend; $autorandr -- --change'"
+bindsym $mod+F12 exec "bash -c '$lock & sleep 3; systemctl suspend; $autorandr --change'"
 bindsym $mod+Control+F12 exec bash -c "shutdown -h now &"
 
 # }}}
@@ -256,9 +256,9 @@ bindsym XF86MonBrightnessUp exec sudo ~/.local/bin/backlight inc
 bindsym XF86MonBrightnessDown exec sudo ~/.local/bin/backlight dec
 bindsym $mod+F9 exec sudo ~/.local/bin/backlight inc
 bindsym $mod+F8 exec sudo ~/.local/bin/backlight dec
-bindsym $mod+F2 exec $autorandr --change
-bindsym $mod+Control+F2 exec bash -c '$autorandr | $rofi -dmenu | xargs -r $autorandr --load'
-bindsym $mod+Control+Shift+F2 exec $autorandr --load laptop
+bindsym $mod+F2 exec bash -c '$autorandr --change && sleep 1 && i3-msg restart'
+bindsym $mod+Control+F2 exec bash -c '$autorandr | $rofi -dmenu | xargs -r $autorandr --load && sleep 1 && i3-msg restart'
+bindsym $mod+Control+Shift+F2 exec bash -c '$autorandr --load laptop && sleep 1 && i3-msg restart'
 
 # }}}
 # Switching keyboard layout           ($mod+[F10]) {{{
