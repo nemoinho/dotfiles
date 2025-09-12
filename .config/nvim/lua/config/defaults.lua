@@ -139,3 +139,52 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.tabstop = 4
 	end,
 })
+
+if vim.fn.executable('ansible-vault') then
+	local ansiblevaultgroup = vim.api.nvim_create_augroup("ANSIBLE_VAULT", { clear = true })
+	local vault_id = "default"
+	local function register_ansible_vault_for_files_of_path_pattern(pattern)
+		-- ensure no tracability of secrets!
+		vim.api.nvim_create_autocmd({ "BufReadPre", "FileReadPre" }, {
+			pattern = pattern,
+			group = ansiblevaultgroup,
+			callback = function ()
+				vim.opt_local.swapfile = false
+				vim.opt_local.backup = false
+				vim.opt_local.undofile = false
+				vim.opt_local.viminfo = ""
+			end
+		})
+		vim.api.nvim_create_autocmd({ "BufReadPost", "FileReadPost" }, {
+			pattern = pattern,
+			group = ansiblevaultgroup,
+			callback = function ()
+				local header = vim.fn.split(vim.fn.getline(1), ";")
+				if vim.fn.len(header) > 3 then
+					vault_id = header[3]
+				else
+					vault_id = "default"
+				end
+				vim.cmd([[silent %!ansible-vault decrypt]])
+			end
+		})
+		vim.api.nvim_create_autocmd({ "BufWritePre", "FileWritePre" }, {
+			pattern = pattern,
+			group = ansiblevaultgroup,
+			callback = function ()
+				vim.cmd('silent %!ansible-vault encrypt --encrypt-vault-id="' .. vault_id .. '"')
+			end
+		})
+		vim.api.nvim_create_autocmd({ "BufWritePost", "FileWritePost" }, {
+			pattern = pattern,
+			group = ansiblevaultgroup,
+			callback = function ()
+				vim.cmd([[silent undo]])
+			end
+		})
+	end
+	register_ansible_vault_for_files_of_path_pattern("*/ansible/**/vault.yml")
+	register_ansible_vault_for_files_of_path_pattern("*/group_vars/*/vault.yml")
+	register_ansible_vault_for_files_of_path_pattern("*/host_vars/*/vault.yml")
+	register_ansible_vault_for_files_of_path_pattern("*/vars/vault.yml")
+end
