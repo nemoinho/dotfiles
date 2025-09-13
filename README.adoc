@@ -17,7 +17,11 @@ sudo apt install git stow
 [source,bash]
 brew install git stow
 
-== Usage
+== Setup and useage
+[NOTE]
+My https://gitea.nehrke.info/nemoinho/dev-machine/[dev-machine setup] will install and setup these dotfiles automatically.
+So, the only thing I've to care about is the `stow . --adopt` command and to commit changes to the VSC.
+
 Checkout this repository into `~/dotfiles` and apply run `stow` to sync the dotfiles.
 
 [IMPORTANT]
