@@ -1,13 +1,17 @@
+local cmd = function (cmd)
+	return function () vim.cmd(cmd) end
+end
+
 return {
 	{
 		"tpope/vim-fugitive",
 		lazy = false,
 		keys = {
-			{ "<Leader>gb", "<Cmd>G blame<CR>", desc = "Git blame" },
-			{ "<Leader>gll", "<Cmd>G log --graph --format='%h (%ar) %s :: %aN <%aE>'<CR>", desc = "Git log" },
-			{ "<Leader>glf", "<Cmd>G log --graph --format='%h (%ar) %s :: %aN <%aE>' %<CR>", desc = "Git log for current file" },
-			{ "<Leader>glc", "<Cmd>Gclog -- %<CR>", desc = "Quicklist commits affecting the current file" },
-			{ "<Leader>glh", "<Cmd>0Gclog -- %<CR>", desc = "Quicklist revisions of the current file" },
+			{ "<Leader>gb", cmd("G blame"), desc = "Git blame" },
+			{ "<Leader>gll", cmd("G log --graph --format='%h (%ar) %s :: %aN <%aE>'"), desc = "Git log" },
+			{ "<Leader>glf", cmd("G log --graph --format='%h (%ar) %s :: %aN <%aE>' %"), desc = "Git log for current file" },
+			{ "<Leader>glq", cmd("0Gclog -- %"), desc = "Quicklist revisions of the current file" },
+			{ "<Leader>go", cmd("GBrowse"), desc = "Open file in Browser in Remote-Repo"}
 		},
 	},
 	-- Github integration for :GBrowse

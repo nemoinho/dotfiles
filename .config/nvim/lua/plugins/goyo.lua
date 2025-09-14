@@ -10,7 +10,7 @@ return {
 			require('lualine').hide()
 			vim.cmd([[Goyo]])
 			vim.cmd([[Limelight!! 0.8]])
-		end)
+		end, { desc = "Switch to goyo view" })
 	end
 	-- "pocco81/true-zen.nvim",
 	-- config = function ()
