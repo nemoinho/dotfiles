@@ -1,54 +1,66 @@
-export SHELL=/bin/bash
+# vim: ft=sh
 
-[ -z "$XDG_CONFIG_HOME" ] && [ -f "$HOME/.profile" ] && . "$HOME/.profile"
+# resource .profile, to make sure updates are applied immediately, not only after the next login
+test -r "$HOME/.profile" && . "$HOME/.profile"
 
-# Shut off deprecation warning of bash on macos
-export BASH_SILENCE_DEPRECATION_WARNING=1
+# init homebrew first, because otherwise macos is actually unusable...
+test -n "$HOMEBREW_PREFIX" && test -f "$HOMEBREW_PREFIX/bin/brew" && eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
 
-# load all the defauls on debian
-# TODO: get rid of it by applying all relevant things in this file
-[ -d /etc/skel/.bashrc ] && . /etc/skel/.bashrc
+# init sdkman to provide java, gradle, maven, etc.
+test -r "$SDKMAN_DIR/bin/sdkman-init.sh" && . "$SDKMAN_DIR/bin/sdkman-init.sh"
 
-# ensure to delete files from ~/Downloads after 1 day
-(crontab -l 2>/dev/null; echo "*/5 * * * * /usr/bin/find $HOME/Downloads/ -type f -mtime +1 -exec $(which rm) {} \;") | sort -u | crontab -
+# init nvm to provide node.js
+test -r "$NVM_DIR/nvm.sh" && . "$NVM_DIR/nvm.sh"
 
-# debian, ubuntu and so on
+### HERE WE'RE DONE WITH ALL GENERAL PURPOSE CONFIGS
+###
+### The following is only relevant for interactive
+### shells!
+
+# determine if we're interactive otherwise stop here
+! [[ $- = *i* ]] && return
+
 GIT_PROMPT_SH=/usr/lib/git-core/git-sh-prompt
+test -n "$HOMEBREW_PREFIX" && GIT_PROMPT_SH="$HOMEBREW_PREFIX/opt/git/etc/bash_completion.d/git-prompt.sh"
 
-# newtons vegetable with brew installed
-[ ! -e "$GIT_PROMPT_SH" ] && (which brew > /dev/null) && GIT_PROMPT_SH="$(brew --prefix)/opt/git/etc/bash_completion.d/git-prompt.sh"
-
-# Note that the var "NEMO_GIT_STATUS" is only set if in a git directory!
+# Note that the var "NEMO_GIT_STATUS" is only filled when we are in a git directory!
 PS1='\033[01;32m\u@\h\033[0m: \033[01;34m\w\033[0m \t\n$NEMO_GIT_STATUS\$ '
-export GIT_PS1_SHOWCOLORHINTS=1 
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_SHOWUNTRACKEDFILES=1
-export GIT_PS1_SHOWUPSTREAM='auto'
-if [ -f $GIT_PROMPT_SH ]; then
-    . $GIT_PROMPT_SH
-    PROMPT_COMMAND='NEMO_GIT_STATUS="$(__git_ps1 | sed "s/^ //;s/)$/) /")"'
+if test -r "$GIT_PROMPT_SH"; then
+  . $GIT_PROMPT_SH
+  PROMPT_COMMAND='NEMO_GIT_STATUS="$(__git_ps1 | sed "s/^ //;s/)$/) /")";'
 fi
+unset GIT_PROMPT_SH
 
-[ ! -d $XDG_STATE_HOME/bash/log ] && mkdir -p $XDG_STATE_HOME/bash/log
-export HISTTIMEFORMAT="%d/%m/%y %T "
-export HISTSIZE=40000
-export HISTFILESIZE=50000
-export HISTFILE=$XDG_STATE_HOME/bash/bash_history
-export HISTCONTROL=ignorespace:ignoredups
+# keep history on multiple shells in parallel
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
-MY_HISTORY_PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> '$XDG_STATE_HOME'/bash/log/bash-history-$(date "+%Y-%m-%d").log; fi;'
-PROMPT_COMMAND=${MY_HISTORY_PROMPT_COMMAND}${PROMPT_COMMAND}
+# log history on a daily basis, too (with more context)
+HIST_LOG_DIR="$XDG_STATE_HOME/bash/log/"
+HIST_LOG_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> '$HIST_LOG_DIR'/bash-history-$(date "+%Y-%m-%d").log; fi'
+test -d "$HIST_LOG_DIR" || mkdir -p -m 700 "$HIST_LOG_DIR"
+PROMPT_COMMAND="$HIST_LOG_COMMAND; $PROMPT_COMMAND"
+unset HIST_LOG_DIR \
+  HIST_LOG_COMMAND
 
-[ -s $XDG_CONFIG_HOME/broot/launcher/bash/br ] && . $XDG_CONFIG_HOME/broot/launcher/bash/br
+# init zoxide and set alias cd
+which zoxide > /dev/null && eval "$(zoxide init bash)" && alias cd=z
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$XDG_CONFIG_HOME/sdkman"
-[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ] && . "$SDKMAN_DIR/bin/sdkman-init.sh"
+# setup fzf to use it e.g. for Ctrl+r
+which fzf > /dev/null && fzf --bash > /dev/null && eval "$(fzf --bash)"
 
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# load bash_completion
+__bash_completion_dir=/usr/share/bash-completion
+test -n "$HOMEBREW_PREFIX" && __bash_completion_dir="$HOMEBREW_PREFIX/etc"
+if test -r "$__bash_completion_dir/bash_completion"; then
+  . "$__bash_completion_dir/bash_completion"
+
+  # For whatever reason git and ssh autocompletion doesn't load immediately on my Linux...
+  test -r "$__bash_completion_dir/completions/git" && . "$__bash_completion_dir/completions/git"
+  test -r "$__bash_completion_dir/completions/ssh" && . "$__bash_completion_dir/completions/ssh"
+fi
+unset __bash_completion_dir
+# nvm has this separated for whatever reason
+test -r "$NVM_DIR/bash_completion" && . "$NVM_DIR/bash_completion"
 
 # standard alias
 alias cz='(pushd $(git rev-parse --show-toplevel); $(which cz); popd)'
@@ -68,49 +80,14 @@ alias gtl='GIT_PAGER=less git gt'
 alias gdc='gd --cached'
 alias gdcl='GIT_PAGER=less gd --cached'
 alias c='git commit'
-alias markdown_pdf="docker run --rm -v \$PWD:/opt/docs auchida/markdown-pdf markdown-pdf"
 alias vimwiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
 alias wiki='vim -c VimwikiIndex -c "cd %:p:h" -c "silent Git pull"'
 alias g=goto
 alias ff="fd | fzf --preview 'my-cli-preview {}'"
 alias ffv="ff | xargs vim"
 
-which fzf > /dev/null && fzf --bash > /dev/null && eval "$(fzf --bash)"
-which zoxide > /dev/null && eval "$(zoxide init bash)" && alias cd=z
-
-if [ -f .local/bin/lessfilter ]
-then
-  export LESS='-R'
-  export LESSOPEN='|lesspipe %s'
-fi
-
-[ -s "$XDG_CONFIG_HOME/bash/local-config" ] && . "$XDG_CONFIG_HOME/bash/local-config"
-
-# autocompletion
-__bash_completion_dir="$XDG_DATA_HOME/bash-completion/completions"
-which brew &>/dev/null && __bash_completion_dir="$(brew --prefix)/etc/bash_completion.d"
-
-mkdir -p "$__bash_completion_dir"
-
-which kubectl &> /dev/null && [ ! -f "$__bash_completion_dir/kubectl" ] && kubectl completion bash > "$__bash_completion_dir/kubectl"
-which fly &> /dev/null && [ ! -f "$__bash_completion_dir/fly" ] && fly completion --shell bash > "$__bash_completion_dir/fly"
-[ -f ~/Development/nemoinho/github.com/iridakos/goto/goto.sh ] && [ ! -f "$__bash_completion_dir/goto" ] && ln -s ~/Development/nemoinho/github.com/iridakos/goto/goto.sh "$__bash_completion_dir/goto"
-
-# load bash-completion
-which brew &> /dev/null && . "$(brew --prefix)/etc/bash_completion"
-[ -s /etc/bash_completion ] && . /etc/bash_completion
-
-# Enable autocompletion for "config" to manage dotfiles
-[ -s /usr/share/bash-completion/completions/git ] && . /usr/share/bash-completion/completions/git
-__git_complete config __git_main
-__git_complete c __git_main
-
-# load goto alias (isn't looaded for alias by bash-completion, don't know why)
-[ -e "$__bash_completion_dir/goto" ] && . "$__bash_completion_dir/goto"
-unset __bash_completion_dir
-
 # reboot required notice
-[ -f /var/run/reboot-required ] && (>&2 echo -e "\n\033[01;31mReboot required to apply updates"'!'"\033[0m\n")
+test -f /var/run/reboot-required && (>&2 echo -e "\n\033[01;31mReboot required to apply updates"'!'"\033[0m\n")
 
 # config changed notice
-[ -n "$(cd dotfiles && git status --short)" ] && (>&2 echo -e "\n\033[01;33mCurrent configuration is not committed"'!'"\033[0m\nSwitch to ~/dotfiles and run "'"'"\033[01mgit status\033[0m"'"'" for further information\n")
+test -n "$(cd dotfiles && git status --short)" && (>&2 echo -e "\n\033[01;33mCurrent configuration is not committed"'!'"\033[0m\nSwitch to ~/dotfiles and run "'"'"\033[01mgit status\033[0m"'"'" for further information\n")
