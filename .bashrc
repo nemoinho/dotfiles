@@ -42,12 +42,6 @@ PROMPT_COMMAND="$HIST_LOG_COMMAND; $PROMPT_COMMAND"
 unset HIST_LOG_DIR \
   HIST_LOG_COMMAND
 
-# init zoxide and set alias cd
-which zoxide > /dev/null && eval "$(zoxide init bash)" && alias cd=z
-
-# setup fzf to use it e.g. for Ctrl+r
-which fzf > /dev/null && fzf --bash > /dev/null && eval "$(fzf --bash)"
-
 # load bash_completion
 __bash_completion_dir=/usr/share/bash-completion
 test -n "$HOMEBREW_PREFIX" && __bash_completion_dir="$HOMEBREW_PREFIX/etc"
@@ -62,7 +56,14 @@ unset __bash_completion_dir
 # nvm has this separated for whatever reason
 test -r "$NVM_DIR/bash_completion" && . "$NVM_DIR/bash_completion"
 
+# init zoxide and set alias cd
+which zoxide > /dev/null && eval "$(zoxide init --cmd cd bash)"
+
+# setup fzf to use it e.g. for Ctrl+r
+which fzf > /dev/null && fzf --bash > /dev/null && eval "$(fzf --bash)"
+
 # standard alias
+alias z=cd
 alias cz='(pushd $(git rev-parse --show-toplevel); $(which cz); popd)'
 alias e='eza --icons --long --time-style=long-iso --group'
 alias ls='eza --time-style=long-iso --group'
