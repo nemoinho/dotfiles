@@ -141,6 +141,22 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 if vim.fn.executable('ansible-vault') then
+	local function file_exists(name)
+		local f = io.open(name, "r")
+		if f ~= nil then io.close(f) return true else return false end
+	end
+	local function get_ansible_cfg()
+		if file_exists("ansible.cfg") then
+			return "ANSIBLE_CONFIG=./ansible.cfg"
+		else
+			local config_file = vim.fn.expand("%:p:h") .. "/ansible.cfg"
+			if file_exists(config_file) then
+				return "ANSIBLE_CONFIG=" .. config_file
+			else
+				return false
+			end
+		end
+	end
 	local ansiblevaultgroup = vim.api.nvim_create_augroup("ANSIBLE_VAULT", { clear = true })
 	local vault_id = "default"
 	local function register_ansible_vault_for_files_of_path_pattern(pattern)
@@ -159,20 +175,24 @@ if vim.fn.executable('ansible-vault') then
 			pattern = pattern,
 			group = ansiblevaultgroup,
 			callback = function ()
+				local config_env = get_ansible_cfg()
+				if config_env == false then return end
 				local header = vim.fn.split(vim.fn.getline(1), ";")
 				if vim.fn.len(header) > 3 then
 					vault_id = header[3]
 				else
 					vault_id = "default"
 				end
-				vim.cmd([[silent %!ansible-vault decrypt]])
+				vim.cmd("silent %!" .. config_env .. " ansible-vault decrypt")
 			end
 		})
 		vim.api.nvim_create_autocmd({ "BufWritePre", "FileWritePre" }, {
 			pattern = pattern,
 			group = ansiblevaultgroup,
 			callback = function ()
-				vim.cmd('silent %!ansible-vault encrypt --encrypt-vault-id="' .. vault_id .. '"')
+				local config_env = get_ansible_cfg()
+				if config_env == false then return end
+				vim.cmd('silent %!' .. config_env .. ' ansible-vault encrypt --encrypt-vault-id="' .. vault_id .. '"')
 			end
 		})
 		vim.api.nvim_create_autocmd({ "BufWritePost", "FileWritePost" }, {
@@ -183,8 +203,6 @@ if vim.fn.executable('ansible-vault') then
 			end
 		})
 	end
-	register_ansible_vault_for_files_of_path_pattern("*/ansible/**/vault.yml")
-	register_ansible_vault_for_files_of_path_pattern("*/group_vars/*/vault.yml")
-	register_ansible_vault_for_files_of_path_pattern("*/host_vars/*/vault.yml")
-	register_ansible_vault_for_files_of_path_pattern("*/vars/vault.yml")
+	register_ansible_vault_for_files_of_path_pattern("**/vault.yml")
+	register_ansible_vault_for_files_of_path_pattern("**/vault.ini")
 end
