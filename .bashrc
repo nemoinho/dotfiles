@@ -62,6 +62,9 @@ which zoxide > /dev/null && eval "$(zoxide init --cmd cd bash)"
 # setup fzf to use it e.g. for Ctrl+r
 which fzf > /dev/null && fzf --bash > /dev/null && eval "$(fzf --bash)"
 
+# load and unload env-variables dynamically from ".envrc" files
+which direnv > /dev/null && eval "$(direnv hook bash)"
+
 # standard alias
 alias z=cd
 alias cz='(pushd $(git rev-parse --show-toplevel); $(which cz); popd)'
