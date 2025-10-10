@@ -1,0 +1,43 @@
+[general]
+accounts = felix_nehrke_info_gmail,nemoinho_gmail
+pythonfile = $XDG_CONFIG_HOME/offlineimap/utils.py
+
+[Account felix_nehrke_info_gmail]
+localrepository = felix_nehrke_info_gmail-Local
+remoterepository = felix_nehrke_info_gmail-Remote
+
+[Repository felix_nehrke_info_gmail-Local]
+type = Maildir
+localfolders = $XDG_STATE_HOME/offlineimap/felix_nehrke_info_gmail/
+sep = /
+
+[Repository felix_nehrke_info_gmail-Remote]
+maxconnections = 2
+type = Gmail
+remoteuser = felix@nehrke.info
+remotepasseval = get_gmail_pass("felix@nehrke.info")
+realdelete = no
+# Necessary for SSL connections, if using offlineimap version > 6.5.4
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+# Necessary to work around https://github.com/OfflineIMAP/offlineimap/issues/573 (versions 7.0.12, 7.2.1)
+ssl_version = tls1_2
+
+[Account nemoinho_gmail]
+localrepository = nemoinho_gmail-Local
+remoterepository = nemoinho_gmail-Remote
+
+[Repository nemoinho_gmail-Local]
+type = Maildir
+localfolders = $XDG_STATE_HOME/offlineimap/nemoinho_gmail/
+sep = /
+
+[Repository nemoinho_gmail-Remote]
+maxconnections = 2
+type = Gmail
+remoteuser = nemoinho@gmail.com
+remotepasseval = get_gmail_pass("nemoinho@gmail.com")
+realdelete = no
+# Necessary for SSL connections, if using offlineimap version > 6.5.4
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+# Necessary to work around https://github.com/OfflineIMAP/offlineimap/issues/573 (versions 7.0.12, 7.2.1)
+ssl_version = tls1_2

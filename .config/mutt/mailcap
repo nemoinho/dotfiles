@@ -1,0 +1,7 @@
+text/html; lynx -force_html -dump %s; copiousoutput
+application/pdf; evince %s
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; pandoc --from docx --to markdown %s; copiousoutput
+application/vnd.oasis.opendocument.text; pandoc --from odt --to markdown %s; copiousoutput
+image/png; feh --scale-down %s
+image/jpeg; feh --scale-down %s
+image/gif; feh --scale-down %s

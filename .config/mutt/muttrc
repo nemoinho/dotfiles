@@ -1,0 +1,56 @@
+set allow_8bit
+set smart_wrap
+set reverse_name
+set reverse_realname
+#set sidebar_visible
+set wait_key = no
+set confirm_append = no
+set editor = vim
+set sort_aux = last-date-received
+set mailcap_path = "$XDG_CONFIG_HOME/mutt/mailcap"
+
+auto_view text/plain text/html text/calendar application/ics
+alternative_order text/plain text/html text/calendar application/ics
+
+bind index 0 first-entry
+bind index G last-entry
+
+bind pager 0 top
+bind pager G bottom
+bind pager j next-line
+bind pager k previous-line
+bind pager <Backspace> previous-entry
+bind pager <Enter> next-entry
+bind pager <Return> next-entry
+
+bind pager,index \ch sidebar-toggle-visible
+bind pager,index \cj sidebar-next
+bind pager,index \ck sidebar-prev
+bind pager,index \co sidebar-open
+bind pager,index c mail
+
+bind pager,index g noop # unbind g to be used with macros, e.g. gg
+bind pager,index m noop # unbind M to be used with macros, e.g. mv
+
+macro index gg "<first-entry>"
+macro index gr "<imap-fetch-mail>"
+
+macro pager gg "<top>"
+macro pager gn "<next-entry>"
+macro pager gp "<previous-entry>"
+macro pager gr "<group-reply>"
+# Use urlscan instead to follow links instead of the builtin urlview
+macro pager \cb '<pipe-message>urlscan -W<enter>' "Follow links with urlscan"
+
+macro index,pager mv "<tag-prefix><save-message>" "move message to chosen folder"
+
+# I prefer so see the IMAP folders instead of my mailboxes by default
+macro index,pager y "<change-folder>?<toggle-mailboxes><change-dir>$folder<enter>" "show incoming mailboxes list"
+
+# Switch between accounts
+macro index <f2> "<sync-mailbox><enter>source $XDG_CONFIG_HOME/mutt/account.info.nehrke_felix.muttrc<enter><change-folder>=INBOX<enter>"
+macro index <f3> "<sync-mailbox><enter>source $XDG_CONFIG_HOME/mutt/account.com.gmail_nemoinho.muttrc<enter><change-folder>=INBOX<enter>"
+
+# Source my default account
+source "$XDG_CONFIG_HOME/mutt/account.info.nehrke_felix.muttrc"
+#source "$XDG_CONFIG_HOME/mutt/account.com.gmail_nemoinho.muttrc"

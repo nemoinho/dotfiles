@@ -1,0 +1,34 @@
+# Location of inbox
+set spoolfile = "=INBOX"
+set postponed = "=[Gmail]/Drafts"
+set record = "=[Gmail]/Sent Mail"
+
+# In Gmail the trash works different...
+unset trash
+
+mailboxes =INBOX \
+  -label Drafts "=[Gmail]/Drafts" \
+  -label Sent "=[Gmail]/Sent Mail" \
+  -label Trash "=[Gmail]/Trash" \
+  -label Spam "=[Gmail]/Spam" \
+  -label Archive "=[Gmail]/All Mail" \
+
+# Headers to show
+ignore *
+unignore date from to cc subject x-mailer resent-from reply-to
+bind pager,index d noop
+bind pager,index e noop
+
+macro index,pager d "<tag-prefix><save-message>=[Gmail]/Trash<enter>" "Move message to chosen folder"
+macro pager d "<save-message>=[Gmail]/Trash<enter>" "Move message to chosen folder"
+macro index,pager e "<tag-prefix><purge-message>" "Move message to chosen folder"
+macro index,pager ga "<change-folder>=[Gmail]/All^V Mail<enter>" "Switch to Archive"
+macro index,pager gd "<change-folder>=[Gmail]/Drafts<enter>" "Switch to Drafts"
+macro index,pager gi "<change-folder>=INBOX<enter>" "Switch to Inbox"
+macro index,pager gs "<change-folder>=[Gmail]/Sent^V Mail<enter>" "Switch to Sent Mail"
+macro index,pager gS "<change-folder>=[Gmail]/Spam<enter>" "Switch to Spam"
+macro index,pager gt "<change-folder>=[Gmail]/Trash<enter>" "Switch to Trash"
+macro index,pager ml "<tag-prefix><copy-message>?" "Move message to chosen folder"
+macro index,pager mi "<tag-prefix><copy-message>=INBOX<enter>" "Add to Inbox"
+macro index,pager mr "<tag-prefix><clear-flag>O" "Mark as read"
+macro index,pager mu "<tag-prefix><set-flag>O" "Mark as read"

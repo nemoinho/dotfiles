@@ -1,0 +1,13 @@
+set realname = "Felix Nehrke"
+set from = "nemoinho@gmail.com"
+
+set smtp_url = "smtp://nemoinho@gmail.com@smtp.gmail.com:587/"
+set smtp_pass = `gmail-app-credentials pass nemoinho@gmail.com`
+
+set folder = ~/.local/state/offlineimap/nemoinho_gmail
+
+set header_cache = "$XDG_CACHE_HOME/mutt/com.gmail_nemoinho/cache/headers"
+set message_cachedir = "$XDG_CACHE_HOME/mutt/com.gmail_nemoinho/cache/bodies"
+set certificate_file = "$XDG_CACHE_HOME/mutt/com.gmail_nemoinho/certificates"
+
+source "$XDG_CONFIG_HOME/mutt/gmail.muttrc"

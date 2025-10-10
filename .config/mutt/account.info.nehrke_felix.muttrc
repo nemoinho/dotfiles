@@ -1,0 +1,13 @@
+set realname = "Felix Nehrke"
+set from = "felix@nehrke.info"
+
+set smtp_url = "smtp://felix@nehrke.info@smtp.gmail.com:587/"
+set smtp_pass = `gmail-app-credentials pass felix@nehrke.info`
+
+set folder = ~/.local/state/offlineimap/felix_nehrke_info_gmail
+
+set header_cache = "$XDG_CACHE_HOME/mutt/info.nehrke_felix/cache/headers"
+set message_cachedir = "$XDG_CACHE_HOME/mutt/info.nehrke_felix/cache/bodies"
+set certificate_file = "$XDG_CACHE_HOME/mutt/info.nehrke_felix/certificates"
+
+source "$XDG_CONFIG_HOME/mutt/gmail.muttrc"
