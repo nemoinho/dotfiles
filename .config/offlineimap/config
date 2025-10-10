@@ -5,6 +5,9 @@ pythonfile = $XDG_CONFIG_HOME/offlineimap/utils.py
 [Account felix_nehrke_info_gmail]
 localrepository = felix_nehrke_info_gmail-Local
 remoterepository = felix_nehrke_info_gmail-Remote
+# quick refresh every other minute and full once per hour
+autorefresh = 3
+quick = 20
 
 [Repository felix_nehrke_info_gmail-Local]
 type = Maildir
@@ -25,6 +28,9 @@ ssl_version = tls1_2
 [Account nemoinho_gmail]
 localrepository = nemoinho_gmail-Local
 remoterepository = nemoinho_gmail-Remote
+# quick refresh every 5 minutes and full once per hour
+autorefresh = 5
+quick = 12
 
 [Repository nemoinho_gmail-Local]
 type = Maildir
