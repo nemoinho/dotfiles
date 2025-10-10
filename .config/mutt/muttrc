@@ -2,6 +2,8 @@ set allow_8bit
 set smart_wrap
 set reverse_name
 set reverse_realname
+set reflow_text
+set wrap = 80
 #set sidebar_visible
 set wait_key = no
 set confirm_append = no
