@@ -9,7 +9,7 @@ set $autorandr /usr/bin/autorandr
 set $w01 "1 󰈹"
 # code
 set $w02 "2 󰗀"
-set $w03 "3"
+set $w03 "3 󰇮"
 set $w04 "4"
 set $w05 "5"
 set $w06 "6"
