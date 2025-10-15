@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+[ -z "$MASTERPW" ] && read -sp "Enpass password:" MASTERPW
+MASTERPW="$MASTERPW" /usr/bin/offlineimap
+
