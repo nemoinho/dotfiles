@@ -97,6 +97,7 @@ local home = vim.fn.expand("$HOME")
 -- fix filetypes
 fix_filetype("*Containerfile", "dockerfile")
 fix_filetype("*.muttrc", "muttrc")
+fix_filetype("*.tf", "terraform")
 fix_filetype(home.."/.config/git/*", "gitconfig")
 fix_filetype(home.."/dotfiles/.config/git/*", "gitconfig")
 fix_filetype(home.."/.config/offlineimap/*", "ini")
