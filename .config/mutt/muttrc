@@ -41,8 +41,9 @@ macro pager gg "<top>"
 macro pager gn "<next-entry>"
 macro pager gp "<previous-entry>"
 macro pager gr "<group-reply>"
-# Use urlscan instead to follow links instead of the builtin urlview
-macro pager \cb '<pipe-message>urlscan -W<enter>' "Follow links with urlscan"
+# Allow urlscan to follow links additional of the builtin urlview
+macro pager \cg '<pipe-message>urlscan -W<enter>' "Follow links with urlscan"
+macro pager \cv '<pipe-message>urlscan<enter>' "Follow links with urlscan"
 
 macro index,pager mv "<tag-prefix><save-message>" "move message to chosen folder"
 
