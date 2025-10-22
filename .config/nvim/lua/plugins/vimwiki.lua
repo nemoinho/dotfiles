@@ -34,9 +34,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.wrap = true
 		vim.opt_local.number = false
 		vim.opt_local.relativenumber = false
-		vim.keymap.set("n", "<Leader>ws", function()
-			vim.cmd("call system('sleep 2 && cd " .. wikipath .. " && git add . && git commit -m " .. '"Auto commit"' .. " && git push')")
-		end)
+		vim.keymap.set("n", "<Leader>ws", "<Cmd>Gw | G commit-and-push<CR>")
 	end,
 })
 

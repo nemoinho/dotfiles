@@ -76,6 +76,10 @@
 	# Shortcut for checkout, we are all lazy
 	co = checkout
 
+	# A utility to push right after a commit (I use that for my vimwiki with the key ,ws)
+	commit-and-push = "!git commit && git push"
+	cap = "!git commit && git push"
+
 	# Show the changes which will be committed
 	dc = diff --cached
 
