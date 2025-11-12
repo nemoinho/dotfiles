@@ -10,6 +10,14 @@ set confirm_append = no
 set editor = vim
 set sort_aux = last-date-received
 set mailcap_path = "$XDG_CONFIG_HOME/mutt/mailcap"
+set date_format = "%d.%m. %I:%M"
+set index_format = "%3C %Z %d  %-18.18F  %s  (%-2.4c)"
+source "$XDG_CONFIG_HOME/mutt/gruvbox.muttrc"
+color index_author color167 color234
+color index_size color142 color234
+color index_date color214 color234
+color status color220 color235
+#color markers     color234 color234
 
 auto_view text/plain text/html text/calendar application/ics
 alternative_order text/plain text/html text/calendar application/ics
