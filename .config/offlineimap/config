@@ -1,5 +1,6 @@
 [general]
-accounts = felix_nehrke_info_gmail,nemoinho_gmail
+accounts = felix_nehrke_info_gmail, nemoinho_gmail
+maxsyncaccounts = 2
 pythonfile = $XDG_CONFIG_HOME/offlineimap/utils.py
 
 [Account felix_nehrke_info_gmail]
