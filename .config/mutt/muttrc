@@ -54,8 +54,8 @@ macro pager mv "<save-message>" "move message to chosen folder"
 macro index,pager y "<change-folder>?<toggle-mailboxes><change-dir>$folder<enter>" "show incoming mailboxes list"
 
 # Switch between accounts
-macro index <f2> "<sync-mailbox><enter>source $XDG_CONFIG_HOME/mutt/account.info.nehrke_felix.muttrc<enter><change-folder>=INBOX<enter>"
-macro index <f3> "<sync-mailbox><enter>source $XDG_CONFIG_HOME/mutt/account.com.gmail_nemoinho.muttrc<enter><change-folder>=INBOX<enter>"
+macro index <f2> "<sync-mailbox><enter-command>source $XDG_CONFIG_HOME/mutt/account.info.nehrke_felix.muttrc<enter><change-folder>=INBOX<enter>"
+macro index <f3> "<sync-mailbox><enter-command>source $XDG_CONFIG_HOME/mutt/account.com.gmail_nemoinho.muttrc<enter><change-folder>=INBOX<enter>"
 
 # Source my default account
 source "$XDG_CONFIG_HOME/mutt/account.info.nehrke_felix.muttrc"
