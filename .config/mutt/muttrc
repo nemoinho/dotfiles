@@ -52,6 +52,7 @@ macro pager gr "<group-reply>"
 # Allow urlscan to follow links additional of the builtin urlview
 macro index,pager,attach gu '<pipe-message>urlscan<enter>' "Follow links with urlscan"
 macro index,pager,attach go '<pipe-message>urlscan --headers -d -W<enter>' "Follow links with urlscan"
+macro attach gf "<enter-command>unset wait_key<enter><shell-escape>rm -f ~/Downloads/mutt-attach<enter><save-entry><kill-line>~/Downloads/mutt-attach<enter><shell-escape>firefox ~/Downloads/mutt-attach &<enter>" "Open attachent in firefox"
 # Neither builtin urlview nor urlscan really worked great on stupid marketing mails, so w3m for the rescue...
 macro index,pager,attach gv "<view-attachments><search>text/html<enter><pipe-message>w3m -T text/html -o imgdisplay= -o confirm_qq=false<enter><exit>"
 
