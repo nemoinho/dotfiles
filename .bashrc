@@ -12,6 +12,8 @@ test -r "$SDKMAN_DIR/bin/sdkman-init.sh" && . "$SDKMAN_DIR/bin/sdkman-init.sh"
 # init nvm to provide node.js
 test -r "$NVM_DIR/nvm.sh" && . "$NVM_DIR/nvm.sh"
 
+test -r "$CARGO_HOME/env" && . "$CARGO_HOME/env"
+
 ### HERE WE'RE DONE WITH ALL GENERAL PURPOSE CONFIGS
 ###
 ### The following is only relevant for interactive

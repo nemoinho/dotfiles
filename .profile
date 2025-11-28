@@ -39,11 +39,13 @@ GIT_PS1_SHOWSTASHSTATE=1
 GIT_PS1_SHOWUNTRACKEDFILES=1
 GIT_PS1_SHOWUPSTREAM='auto'
 
-# arbitrary variables for required by different tools
+# arbitrary variables required by different tools
 # nvm to use different node.js versions
 NVM_DIR="$XDG_CONFIG_HOME/nvm"
 # sdkman to use different java tools in different versions easily
 SDKMAN_DIR="$XDG_CONFIG_HOME/sdkman"
+# rust cargo
+CARGO_HOME="$XDG_DATA_HOME/cargo"
 # homebrew is complicated as shit, lucky me only relevant on macos
 test `uname` = "Darwin" && test `uname -m` = "arm64" && HOMEBREW_PREFIX=/opt/homebrew
 test `uname` = "Darwin" && test ! `uname -m` = "arm64" && HOMEBREW_PREFIX=/usr/local
