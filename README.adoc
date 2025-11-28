@@ -3,6 +3,10 @@ Felix Nehrke <felix@nehrke.info>
 :icons: font
 :source-highlighter: rouge
 
+ifdef::env-github[]
+NOTE: This is only *a mirror* from my https://gitea.nehrke.info/nemoinho/dotfiles[personal git-server].
+endif::[]
+
 [abstract]
 I use https://www.gnu.org/software/stow/[`stow`] to sync my dotfiles between the OS and this repository.
 
