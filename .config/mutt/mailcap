@@ -1,5 +1,5 @@
 text/html; w3m -T text/html -o imgdisplay="" -dump %s; copiousoutput
-application/pdf; evince %s
+application/pdf; zathura %s
 application/vnd.openxmlformats-officedocument.wordprocessingml.document; pandoc --from docx --to markdown %s; copiousoutput
 application/vnd.oasis.opendocument.text; pandoc --from odt --to markdown %s; copiousoutput
 image/png; feh --scale-down %s
