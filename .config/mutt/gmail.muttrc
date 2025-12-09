@@ -1,6 +1,9 @@
 # Location of inbox
 set spoolfile = "=INBOX"
 set postponed = "=[Gmail]/Drafts"
+# This will result in 1-to-1 copies in the sent-mail directory,
+# Because google creates another copy to that directory.
+# So, we have to clean this periodically.
 set record = "=[Gmail]/Sent Mail"
 
 # In Gmail the trash works different...
