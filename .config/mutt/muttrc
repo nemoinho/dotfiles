@@ -56,8 +56,8 @@ macro attach gf "<enter-command>unset wait_key<enter><shell-escape>rm -f ~/Downl
 # Neither builtin urlview nor urlscan really worked great on stupid marketing mails, so w3m for the rescue...
 macro index,pager,attach gv "<view-attachments><search>text/html<enter><pipe-message>w3m -T text/html -o imgdisplay= -o confirm_qq=false<enter><exit>"
 
-macro index mv "<tag-prefix><save-message>" "move message to chosen folder"
-macro pager mv "<save-message>" "move message to chosen folder"
+macro index mv "<tag-prefix><save-message>?" "move message to chosen folder"
+macro pager mv "<save-message>?" "move message to chosen folder"
 
 # I prefer so see the IMAP folders instead of my mailboxes by default
 macro index,pager y "<change-folder>?<toggle-mailboxes><change-dir>$folder<enter>" "show incoming mailboxes list"
