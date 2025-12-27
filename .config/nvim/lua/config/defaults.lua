@@ -106,6 +106,15 @@ fix_filetype(home.."/.local/bin/*", "sh")
 fix_filetype(home.."/dotfiles/.local/bin/*", "sh")
 
 -- adjust settings per filetype
+-- elm
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "elm",
+	group = configgroup,
+	callback = function()
+		vim.opt_local.shiftwidth = 4
+		vim.opt_local.tabstop = 4
+	end,
+})
 -- git
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "gitconfig",
