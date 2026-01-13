@@ -12,6 +12,12 @@ set sort_aux = last-date-received
 set mailcap_path = "$XDG_CONFIG_HOME/mutt/mailcap"
 set date_format = "%d.%m.%y %I:%M"
 set index_format = "%3C %Z %d  %-30.30F  %s  (%-2.4c)"
+
+# Mandatory setting to be able to sync via offlineimap!
+# The default is mbox which is basically a file and will not be synced back to
+# the imap-server via offlineimap.
+set mbox_type=Maildir
+
 source "$XDG_CONFIG_HOME/mutt/gruvbox.muttrc"
 color index_author color167 color234
 color index_size color142 color234
