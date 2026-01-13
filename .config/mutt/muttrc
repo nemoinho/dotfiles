@@ -32,6 +32,8 @@ bind pager k previous-line
 bind pager <Backspace> previous-entry
 bind pager <Enter> next-entry
 bind pager <Return> next-entry
+bind attach i exit
+bind pager,attach q noop
 
 bind pager,index \ch sidebar-toggle-visible
 bind pager,index \cj sidebar-next
