@@ -13,6 +13,10 @@ return {
 			{ "<Leader>glq", cmd("0Gclog -- %"), desc = "Quicklist revisions of the current file" },
 			{ "<Leader>go", cmd("GBrowse"), desc = "Open file in Browser in Remote-Repo"}
 		},
+		config = function ()
+			-- alias to only type :Gc to commit
+			vim.api.nvim_create_user_command("Gc", "G commit", {})
+		end
 	},
 	-- Github integration for :GBrowse
 	{ "tpope/vim-rhubarb" },
