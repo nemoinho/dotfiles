@@ -13,7 +13,7 @@ local on_attach = function(_, bufnr)
 	vim.keymap.set("n", "gK", vim.lsp.buf.signature_help, desc("Show signature"))
 	vim.keymap.set("n", "gn", function() vim.diagnostic.jump({ count = 1, float = true }) end, desc("Jump to next occurence"))
 	vim.keymap.set("n", "gN", function() vim.diagnostic.jump({ count = -1, float = true }) end, desc("Jump to previous occurence"))
-	vim.keymap.set("n", "gr", ts.lsp_references, desc("Search references"))
+	vim.keymap.set("n", "gs", ts.lsp_references, desc("Search references"))
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 end
 
