@@ -1,17 +1,19 @@
 local on_attach = function(_, bufnr)
+	local desc = function (desc)
+		return { noremap = true, silent = true, buffer = bufnr, desc = desc }
+	end
 	local ts = require("telescope.builtin")
-	local opts = { noremap = true, silent = true, buffer = bufnr }
-	vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, opts)
-	vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, opts)
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-	vim.keymap.set("n", "ge", vim.diagnostic.open_float, opts)
-	vim.keymap.set("n", "gf", function() vim.lsp.buf.format { async = true } end, opts)
-	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-	vim.keymap.set("n", "gk", vim.lsp.buf.hover, opts)
-	vim.keymap.set("n", "gK", vim.lsp.buf.signature_help, opts)
-	vim.keymap.set("n", "gn", function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
-	vim.keymap.set("n", "gN", function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
-	vim.keymap.set("n", "gr", ts.lsp_references, opts)
+	vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, desc("Rename identifier"))
+	vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, desc("Code actions"))
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, desc("Jump to definition"))
+	vim.keymap.set("n", "ge", vim.diagnostic.open_float, desc("Open diagnostics, show errors"))
+	vim.keymap.set("n", "gf", function() vim.lsp.buf.format { async = true } end, desc("Format code"))
+	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, desc("Jump to implementation"))
+	vim.keymap.set("n", "gk", vim.lsp.buf.hover, desc("Show quick-docs"))
+	vim.keymap.set("n", "gK", vim.lsp.buf.signature_help, desc("Show signature"))
+	vim.keymap.set("n", "gn", function() vim.diagnostic.jump({ count = 1, float = true }) end, desc("Jump to next occurence"))
+	vim.keymap.set("n", "gN", function() vim.diagnostic.jump({ count = -1, float = true }) end, desc("Jump to previous occurence"))
+	vim.keymap.set("n", "gr", ts.lsp_references, desc("Search references"))
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 end
 

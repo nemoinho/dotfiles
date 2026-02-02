@@ -34,7 +34,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.wrap = true
 		vim.opt_local.number = false
 		vim.opt_local.relativenumber = false
-		vim.keymap.set("n", "<Leader>ws", "<Cmd>Gw | G commit-and-push<CR>")
+		vim.keymap.set("n", "<Leader>ws", "<Cmd>Gw | G commit-and-push<CR>", { desc = "Save, commit & push" })
 	end,
 })
 
