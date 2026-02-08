@@ -17,7 +17,7 @@ vim.opt.cursorline = true
 
 -- show meaningful chars for non-printable situations, e.g. nbsp or wrappings
 vim.opt.list = true
-vim.opt.listchars = "tab:› ,trail:·,nbsp:␣,extends:»,precedes:«"
+vim.opt.listchars = "tab:› ,multispace:—,leadmultispace: ,trail:·,nbsp:␣,extends:»,precedes:«"
 
 -- highlight search results
 vim.opt.hlsearch = true
