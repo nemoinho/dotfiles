@@ -10,7 +10,7 @@ set confirm_append = no
 set editor = vim
 set sort_aux = last-date-received
 set mailcap_path = "$XDG_CONFIG_HOME/mutt/mailcap"
-set date_format = "%d.%m.%y %I:%M"
+set date_format = "%d.%m.%y %H:%M"
 set index_format = "%3C %Z %d  %-30.30F  %s  (%-2.4c)"
 
 # Mandatory setting to be able to sync via offlineimap!
