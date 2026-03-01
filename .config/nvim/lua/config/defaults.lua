@@ -135,6 +135,26 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.tabstop = 4
 	end,
 })
+-- markdown
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown",
+	group = configgroup,
+	callback = function()
+		vim.opt_local.shiftwidth = 4
+		vim.opt_local.tabstop = 4
+		vim.opt.wrap = true
+	end,
+})
+-- asciidoc
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "asciidoc",
+	group = configgroup,
+	callback = function()
+		vim.opt_local.shiftwidth = 4
+		vim.opt_local.tabstop = 4
+		vim.opt.wrap = true
+	end,
+})
 -- i3config
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "i3config",
