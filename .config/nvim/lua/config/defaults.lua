@@ -175,6 +175,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- descrypt and encrypt ansible vault on the fly
 if vim.fn.executable('ansible-vault') then
 	local function file_exists(name)
 		local f = io.open(name, "r")
