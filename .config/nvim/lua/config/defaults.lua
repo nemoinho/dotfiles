@@ -132,6 +132,16 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.colorcolumn = "72"
 	end,
 })
+-- mail
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "mail",
+	group = configgroup,
+	callback = function()
+		-- https://datatracker.ietf.org/doc/html/rfc5322#section-2.1.1
+		vim.opt_local.textwidth = 78
+		vim.opt_local.colorcolumn = "78"
+	end,
+})
 -- lua
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "lua",
