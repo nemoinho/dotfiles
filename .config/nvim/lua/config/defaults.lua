@@ -125,6 +125,13 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.tabstop = 4
 	end,
 })
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "gitcommit",
+	group = configgroup,
+	callback = function()
+		vim.opt_local.colorcolumn = "72"
+	end,
+})
 -- lua
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "lua",
