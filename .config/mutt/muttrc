@@ -77,3 +77,5 @@ macro index <f3> "<sync-mailbox><enter-command>source $XDG_CONFIG_HOME/mutt/acco
 # Source my default account
 source "$XDG_CONFIG_HOME/mutt/account.info.nehrke_felix.muttrc"
 #source "$XDG_CONFIG_HOME/mutt/account.com.gmail_nemoinho.muttrc"
+
+source "$XDG_CONFIG_HOME/mutt/mail_aliases"

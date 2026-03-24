@@ -1,4 +1,5 @@
 README.*
 !README.adoc
+.config/mutt/*_aliases
 
 __pycache__
