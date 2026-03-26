@@ -77,9 +77,15 @@ return {
 					group = augroup,
 					buffer = bufnr,
 					callback = function()
-						if vim.bo.filetype == "typescript" then
-							vim.lsp.buf.format()
-						end
+						client:request_sync("workspace/executeCommand", {
+							command = "eslint.applyAllFixes",
+							arguments = {
+								{
+									uri = vim.uri_from_bufnr(bufnr),
+									version = vim.lsp.util.buf_versions[bufnr],
+								}
+							}
+						})
 					end,
 				})
 			end,
