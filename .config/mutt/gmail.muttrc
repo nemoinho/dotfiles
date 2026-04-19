@@ -16,9 +16,6 @@ mailboxes =INBOX \
   -label Spam "=[Gmail]/Spam" \
   -label Archive "=[Gmail]/All Mail" \
 
-# Headers to show
-ignore *
-unignore date from to cc subject x-mailer resent-from reply-to
 bind pager,index d noop
 bind pager,index e noop
 

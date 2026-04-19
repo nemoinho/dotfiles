@@ -13,6 +13,12 @@ set mailcap_path = "$XDG_CONFIG_HOME/mutt/mailcap"
 set date_format = "%d.%m.%y %H:%M"
 set index_format = "%3C %Z %d  %-30.30F  %s  (%-2.4c)"
 
+# Headers to show by default
+ignore *
+unignore resent-from reply-to date from to cc subject
+unhdr_order *
+hdr_order resent-from reply-to date from to cc subject
+
 # Mandatory setting to be able to sync via offlineimap!
 # The default is mbox which is basically a file and will not be synced back to
 # the imap-server via offlineimap.
