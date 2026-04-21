@@ -3,7 +3,7 @@ return {
 		"aklt/plantuml-syntax",
 	},
 	{
-		'javiorfo/nvim-soil',
+		'https://codeberg.org/caskstrength/nvim-soil',
 		ft = "plantuml",
 
 		opts = {
