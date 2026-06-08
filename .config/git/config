@@ -83,6 +83,9 @@
 	# Show the changes which will be committed
 	dc = diff --cached
 
+	# Show diff side-by-side
+	diffs = -c  delta.side-by-side=true diff
+
 	# Fetch all remote-changes, but don't merge local branches!
 	fa = fetch --all
 
